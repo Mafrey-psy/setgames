@@ -12,4 +12,6 @@ export interface Game {
   rating: number;
   url: string;
   accent: string;
+  imageUrl: string | null;
+  reviewsSummary: string | null;
 }

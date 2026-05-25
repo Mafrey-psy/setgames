@@ -32,8 +32,18 @@ function rowToGame(r: any): Game {
     rating: Number(r.rating),
     url: r.url,
     accent: r.accent,
+    imageUrl: r.image_url ?? null,
+    reviewsSummary: r.reviews_summary ?? null,
   };
 }
+
+export async function fetchGame(id: string): Promise<Game | null> {
+  const { data, error } = await supabase
+    .from("games").select("*").eq("id", id).eq("published", true).maybeSingle();
+  if (error) throw error;
+  return data ? rowToGame(data) : null;
+}
+
 
 export async function fetchGames(platform?: Platform): Promise<Game[]> {
   let q = supabase.from("games").select("*").eq("published", true).order("free_until", { ascending: true });
