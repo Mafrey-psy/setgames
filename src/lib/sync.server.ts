@@ -153,6 +153,17 @@ export async function runSync(trigger: string): Promise<{
     }
   }
 
+  // Despublica jogos cuja promoção expirou (não estão mais grátis hoje)
+  try {
+    await supabaseAdmin
+      .from("games")
+      .update({ published: false })
+      .lt("free_until", new Date().toISOString())
+      .eq("published", true);
+  } catch (e: any) {
+    errorDetails.push(`unpublish-expired: ${e?.message ?? e}`);
+  }
+
   const message = `[${trigger}] ${inserted} novos, ${updated} atualizados, ${errors} erros`;
   await supabaseAdmin.from("sync_logs").insert({
     source: trigger, inserted_count: inserted, updated_count: updated,
