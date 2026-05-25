@@ -14,16 +14,177 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      culture_posts: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          excerpt: string
+          id: string
+          published: boolean
+          published_at: string
+          slug: string
+          title: string
+        }
+        Insert: {
+          author?: string
+          content: string
+          created_at?: string
+          excerpt: string
+          id?: string
+          published?: boolean
+          published_at?: string
+          slug: string
+          title: string
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          excerpt?: string
+          id?: string
+          published?: boolean
+          published_at?: string
+          slug?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      games: {
+        Row: {
+          accent: string
+          created_at: string
+          description: string
+          developer: string
+          free_until: string
+          genre: string[]
+          id: string
+          original_price: string
+          platform: string
+          published: boolean
+          rating: number
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          accent?: string
+          created_at?: string
+          description: string
+          developer: string
+          free_until: string
+          genre?: string[]
+          id?: string
+          original_price: string
+          platform: string
+          published?: boolean
+          rating?: number
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          accent?: string
+          created_at?: string
+          description?: string
+          developer?: string
+          free_until?: string
+          genre?: string[]
+          id?: string
+          original_price?: string
+          platform?: string
+          published?: boolean
+          rating?: number
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      guides: {
+        Row: {
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          published: boolean
+          read_time: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          icon?: string
+          id?: string
+          published?: boolean
+          read_time?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          published?: boolean
+          read_time?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +311,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
