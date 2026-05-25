@@ -9,8 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SteamRouteImport } from './routes/steam'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as GuiasRouteImport } from './routes/guias'
+import { Route as EpicRouteImport } from './routes/epic'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SteamRoute = SteamRouteImport.update({
+  id: '/steam',
+  path: '/steam',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuiasRoute = GuiasRouteImport.update({
+  id: '/guias',
+  path: '/guias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EpicRoute = EpicRouteImport.update({
+  id: '/epic',
+  path: '/epic',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +43,72 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/epic': typeof EpicRoute
+  '/guias': typeof GuiasRoute
+  '/sobre': typeof SobreRoute
+  '/steam': typeof SteamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/epic': typeof EpicRoute
+  '/guias': typeof GuiasRoute
+  '/sobre': typeof SobreRoute
+  '/steam': typeof SteamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/epic': typeof EpicRoute
+  '/guias': typeof GuiasRoute
+  '/sobre': typeof SobreRoute
+  '/steam': typeof SteamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/epic' | '/guias' | '/sobre' | '/steam'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/epic' | '/guias' | '/sobre' | '/steam'
+  id: '__root__' | '/' | '/epic' | '/guias' | '/sobre' | '/steam'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EpicRoute: typeof EpicRoute
+  GuiasRoute: typeof GuiasRoute
+  SobreRoute: typeof SobreRoute
+  SteamRoute: typeof SteamRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/steam': {
+      id: '/steam'
+      path: '/steam'
+      fullPath: '/steam'
+      preLoaderRoute: typeof SteamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guias': {
+      id: '/guias'
+      path: '/guias'
+      fullPath: '/guias'
+      preLoaderRoute: typeof GuiasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/epic': {
+      id: '/epic'
+      path: '/epic'
+      fullPath: '/epic'
+      preLoaderRoute: typeof EpicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,7 +121,21 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EpicRoute: EpicRoute,
+  GuiasRoute: GuiasRoute,
+  SobreRoute: SobreRoute,
+  SteamRoute: SteamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

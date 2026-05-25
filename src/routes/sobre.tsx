@@ -1,0 +1,45 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { PageShell, PageHeader } from "@/components/PageShell";
+import { Brain, Heart, ShieldCheck } from "lucide-react";
+
+export const Route = createFileRoute("/sobre")({
+  component: SobrePage,
+  head: () => ({
+    meta: [
+      { title: "Sobre — Portal Gamer" },
+      { name: "description", content: "Projeto independente que une curadoria gamer e análise comportamental." },
+    ],
+  }),
+});
+
+function SobrePage() {
+  return (
+    <PageShell>
+      <PageHeader eyebrow="Sobre" title="Curadoria com cabeça de psicólogo." />
+      <section className="container mx-auto max-w-3xl px-6 py-12">
+        <p className="text-lg leading-relaxed text-muted-foreground">
+          O <span className="text-foreground font-semibold">Portal Gamer</span> nasceu da combinação entre paixão por jogos e
+          formação em Análise do Comportamento. Selecionamos drops gratuitos da Epic e Steam com um filtro além do hype:
+          {" "}<span className="text-foreground">vale o tempo que você vai investir?</span>
+        </p>
+        <p className="mt-4 leading-relaxed text-muted-foreground">
+          Sem publi disfarçada, sem afiliado escondido, sem clickbait. Quinta-feira, 13h, lista pronta no seu e-mail.
+        </p>
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-3">
+          {[
+            { icon: Brain, title: "Curadoria analítica", text: "Critério editorial baseado em reforço e engajamento sustentável." },
+            { icon: ShieldCheck, title: "Independente", text: "Sem patrocínio das publishers — opinião sempre honesta." },
+            { icon: Heart, title: "Comunidade", text: "Construído por quem joga, para quem joga." },
+          ].map(({ icon: Icon, title, text }) => (
+            <div key={title} className="rounded-lg border border-border bg-card p-5">
+              <Icon className="mb-3 h-6 w-6 text-primary" />
+              <div className="font-semibold">{title}</div>
+              <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </PageShell>
+  );
+}
