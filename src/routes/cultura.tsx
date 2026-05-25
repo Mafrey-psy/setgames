@@ -8,9 +8,9 @@ export const Route = createFileRoute("/cultura")({
   component: CulturaPage,
   head: () => ({
     meta: [
-      { title: "Cultura Gamer — Portal Gamer" },
+      { title: "Cultura Gamer — Set Games" },
       { name: "description", content: "Artigos curtos sobre cultura gamer: gêneros, comportamento, indústria e estética." },
-      { property: "og:title", content: "Cultura Gamer — Portal Gamer" },
+      { property: "og:title", content: "Cultura Gamer — Set Games" },
       { property: "og:description", content: "Artigos curtos sobre cultura gamer: gêneros, comportamento, indústria e estética." },
       { property: "og:url", content: "https://setgames.lovable.app/cultura" },
     ],

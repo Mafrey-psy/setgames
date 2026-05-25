@@ -24,7 +24,7 @@ function AdminCulture() {
       return data as any[];
     },
   });
-  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", content: "", author: "Portal Gamer" });
+  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", content: "", author: "Set Games" });
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ function AdminCulture() {
     const { error } = await supabase.from("culture_posts").insert({ ...form, slug });
     if (error) return toast.error(error.message);
     toast.success("Artigo publicado");
-    setForm({ title: "", slug: "", excerpt: "", content: "", author: "Portal Gamer" });
+    setForm({ title: "", slug: "", excerpt: "", content: "", author: "Set Games" });
     qc.invalidateQueries({ queryKey: ["admin-culture"] });
     qc.invalidateQueries({ queryKey: ["culture"] });
   };

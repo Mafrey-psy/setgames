@@ -14,9 +14,9 @@ export const Route = createFileRoute("/guias")({
   component: GuiasPage,
   head: () => ({
     meta: [
-      { title: "Guias Rápidos — Portal Gamer" },
+      { title: "Guias Rápidos — Set Games" },
       { name: "description", content: "Tutoriais curtos para resgatar jogos, configurar launchers e otimizar sua experiência gamer." },
-      { property: "og:title", content: "Guias Rápidos — Portal Gamer" },
+      { property: "og:title", content: "Guias Rápidos — Set Games" },
       { property: "og:description", content: "Tutoriais curtos para resgatar jogos, configurar launchers e otimizar sua experiência gamer." },
       { property: "og:url", content: "https://setgames.lovable.app/guias" },
     ],

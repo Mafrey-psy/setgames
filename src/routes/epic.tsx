@@ -8,9 +8,9 @@ export const Route = createFileRoute("/epic")({
   component: EpicPage,
   head: () => ({
     meta: [
-      { title: "Jogos grátis na Epic Games — Portal Gamer" },
+      { title: "Jogos grátis na Epic Games — Set Games" },
       { name: "description", content: "Jogos pagos liberados por tempo limitado na Epic Games Store. Atualizado semanalmente." },
-      { property: "og:title", content: "Jogos grátis na Epic Games — Portal Gamer" },
+      { property: "og:title", content: "Jogos grátis na Epic Games — Set Games" },
       { property: "og:description", content: "Jogos pagos liberados por tempo limitado na Epic Games Store. Atualizado semanalmente." },
       { property: "og:url", content: "https://setgames.lovable.app/epic" },
     ],
