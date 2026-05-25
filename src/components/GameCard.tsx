@@ -1,19 +1,24 @@
-import { Link } from "@tanstack/react-router";
-import { Calendar, Star } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { Calendar, ExternalLink, Star } from "lucide-react";
 import type { Game } from "@/lib/games";
 
 const fmt = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
 
 export function GameCard({ game }: { game: Game }) {
+  const navigate = useNavigate();
   const expires = new Date(game.freeUntil);
   const showExpiry = expires.getFullYear() < 2099;
   const platformColor = game.platform === "epic" ? "bg-primary/15 text-primary border-primary/30" : "bg-[oklch(0.65_0.18_230_/_0.15)] text-[oklch(0.78_0.18_230)] border-[oklch(0.65_0.18_230_/_0.3)]";
 
+  const openReviews = () => navigate({ to: "/jogos/$id", params: { id: game.id } });
+
   return (
-    <Link
-      to="/jogos/$id"
-      params={{ id: game.id }}
-      className="group relative block overflow-hidden rounded-xl border border-border bg-gradient-to-b from-card to-background transition hover:border-primary/50 hover:shadow-[0_0_30px_oklch(0.72_0.25_305_/_0.25)]"
+    <article
+      role="link"
+      tabIndex={0}
+      onClick={openReviews}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openReviews(); } }}
+      className="group relative cursor-pointer overflow-hidden rounded-xl border border-border bg-gradient-to-b from-card to-background transition hover:border-primary/50 hover:shadow-[0_0_30px_oklch(0.72_0.25_305_/_0.25)] focus:outline-none focus:ring-2 focus:ring-primary"
     >
       <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${game.accent}`}>
         {game.imageUrl && (
@@ -59,10 +64,16 @@ export function GameCard({ game }: { game: Game }) {
             </div>
           )}
         </div>
-        <div className="flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2 text-sm font-semibold text-primary-foreground transition group-hover:bg-primary/90">
-          Ver síntese de reviews →
-        </div>
+        <a
+          href={game.url}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+        >
+          Resgatar na plataforma <ExternalLink className="h-3.5 w-3.5" />
+        </a>
       </div>
-    </Link>
+    </article>
   );
 }
