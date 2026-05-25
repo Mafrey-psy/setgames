@@ -4,23 +4,41 @@ import { PageShell, PageHeader } from "@/components/PageShell";
 import { BookOpen, Download, Settings, Trophy, type LucideIcon } from "lucide-react";
 import { fetchGuides } from "@/lib/queries";
 
-export const Route = createFileRoute("/guias")({
-  component: GuiasPage,
-  head: () => ({
-    meta: [
-      { title: "Guias Rápidos — Portal Gamer" },
-      { name: "description", content: "Tutoriais curtos para resgatar jogos, configurar launchers e otimizar sua experiência." },
-    ],
-  }),
-});
-
-const icons: Record<string, LucideIcon> = { Download, Settings, Trophy, BookOpen };
-
 const faq = [
   { q: "Os jogos grátis são realmente meus?", a: "Sim. Ao resgatar dentro do prazo, o jogo fica permanentemente na sua biblioteca." },
   { q: "Por que não listam free-to-play?", a: "Free-to-play está sempre grátis e não é notícia. Aqui só entram jogos pagos liberados por tempo limitado." },
   { q: "Posso jogar offline?", a: "Depende do launcher — Steam permite modo offline; Epic exige login inicial." },
 ];
+
+export const Route = createFileRoute("/guias")({
+  component: GuiasPage,
+  head: () => ({
+    meta: [
+      { title: "Guias Rápidos — Portal Gamer" },
+      { name: "description", content: "Tutoriais curtos para resgatar jogos, configurar launchers e otimizar sua experiência gamer." },
+      { property: "og:title", content: "Guias Rápidos — Portal Gamer" },
+      { property: "og:description", content: "Tutoriais curtos para resgatar jogos, configurar launchers e otimizar sua experiência gamer." },
+      { property: "og:url", content: "https://setgames.lovable.app/guias" },
+    ],
+    links: [{ rel: "canonical", href: "https://setgames.lovable.app/guias" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faq.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
+  }),
+});
+
+const icons: Record<string, LucideIcon> = { Download, Settings, Trophy, BookOpen };
 
 function GuiasPage() {
   const { data: guides = [] } = useQuery({ queryKey: ["guides"], queryFn: fetchGuides });
