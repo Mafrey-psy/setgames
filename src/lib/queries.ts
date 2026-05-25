@@ -46,12 +46,18 @@ export async function fetchGame(id: string): Promise<Game | null> {
 
 
 export async function fetchGames(platform?: Platform): Promise<Game[]> {
-  let q = supabase.from("games").select("*").eq("published", true).order("free_until", { ascending: true });
+  let q = supabase
+    .from("games")
+    .select("*")
+    .eq("published", true)
+    .gt("free_until", new Date().toISOString())
+    .order("free_until", { ascending: true });
   if (platform) q = q.eq("platform", platform);
   const { data, error } = await q;
   if (error) throw error;
   return (data ?? []).map(rowToGame);
 }
+
 
 export async function fetchGuides(): Promise<Guide[]> {
   const { data, error } = await supabase
