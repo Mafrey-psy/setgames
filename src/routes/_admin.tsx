@@ -10,10 +10,10 @@ export const Route = createFileRoute("/_admin")({
 
 const items = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/admin/games", label: "Jogos", icon: Gamepad2 },
-  { to: "/admin/guides", label: "Guias", icon: BookOpen },
-  { to: "/admin/culture", label: "Cultura", icon: Newspaper },
-  { to: "/admin/subscribers", label: "Newsletter", icon: Mail },
+  { to: "/admin/games", label: "Jogos", icon: Gamepad2, exact: false },
+  { to: "/admin/guides", label: "Guias", icon: BookOpen, exact: false },
+  { to: "/admin/culture", label: "Cultura", icon: Newspaper, exact: false },
+  { to: "/admin/subscribers", label: "Newsletter", icon: Mail, exact: false },
 ] as const;
 
 function AdminLayout() {
