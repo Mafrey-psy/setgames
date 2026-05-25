@@ -8,7 +8,7 @@ import { Gamepad2 } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
-  head: () => ({ meta: [{ title: "Entrar — Portal Gamer" }] }),
+  head: () => ({ meta: [{ title: "Entrar — Set Games" }] }),
 });
 
 const schema = z.object({

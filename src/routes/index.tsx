@@ -11,9 +11,9 @@ export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "Portal Gamer — Jogos grátis por tempo limitado" },
+      { title: "Set Games — Jogos grátis por tempo limitado" },
       { name: "description", content: "Curadoria semanal dos melhores jogos grátis por tempo limitado na Epic e Steam. Sem free-to-play, sem ruído." },
-      { property: "og:title", content: "Portal Gamer — Jogos grátis por tempo limitado" },
+      { property: "og:title", content: "Set Games — Jogos grátis por tempo limitado" },
       { property: "og:description", content: "Curadoria semanal dos melhores jogos grátis por tempo limitado na Epic e Steam." },
       { property: "og:url", content: "https://setgames.lovable.app/" },
     ],

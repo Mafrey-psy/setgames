@@ -4,7 +4,7 @@ export function Footer() {
       <div className="container mx-auto grid gap-8 px-6 py-12 md:grid-cols-3">
         <div>
           <h3 className="font-display text-lg font-bold">
-            portal<span className="text-gradient">.gamer</span>
+            Set Games
           </h3>
           <p className="mt-2 text-sm text-muted-foreground">
             Curadoria de jogos grátis, guias rápidos e cultura gamer — sem ruído.
@@ -27,7 +27,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border/60 py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Portal Gamer · Feito com ☕ e teclado mecânico.
+        © {new Date().getFullYear()} Set Games · Feito com ☕ e teclado mecânico.
       </div>
     </footer>
   );

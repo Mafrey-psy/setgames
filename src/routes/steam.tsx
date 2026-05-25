@@ -8,9 +8,9 @@ export const Route = createFileRoute("/steam")({
   component: SteamPage,
   head: () => ({
     meta: [
-      { title: "Jogos grátis na Steam — Portal Gamer" },
+      { title: "Jogos grátis na Steam — Set Games" },
       { name: "description", content: "Promoções 100% off e fins de semana grátis na Steam, com preço original e prazo claros." },
-      { property: "og:title", content: "Jogos grátis na Steam — Portal Gamer" },
+      { property: "og:title", content: "Jogos grátis na Steam — Set Games" },
       { property: "og:description", content: "Promoções 100% off e fins de semana grátis na Steam, com preço original e prazo claros." },
       { property: "og:url", content: "https://setgames.lovable.app/steam" },
     ],

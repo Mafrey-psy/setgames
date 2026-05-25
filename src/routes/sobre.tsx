@@ -6,9 +6,9 @@ export const Route = createFileRoute("/sobre")({
   component: SobrePage,
   head: () => ({
     meta: [
-      { title: "Sobre — Portal Gamer" },
+      { title: "Sobre — Set Games" },
       { name: "description", content: "Projeto independente que une curadoria gamer e análise comportamental, mantido por um psicólogo gamer." },
-      { property: "og:title", content: "Sobre — Portal Gamer" },
+      { property: "og:title", content: "Sobre — Set Games" },
       { property: "og:description", content: "Projeto independente que une curadoria gamer e análise comportamental." },
       { property: "og:url", content: "https://setgames.lovable.app/sobre" },
     ],
@@ -22,7 +22,7 @@ function SobrePage() {
       <PageHeader eyebrow="Sobre" title="Curadoria com cabeça de psicólogo." />
       <section className="container mx-auto max-w-3xl px-6 py-12">
         <p className="text-lg leading-relaxed text-muted-foreground">
-          O <span className="text-foreground font-semibold">Portal Gamer</span> nasceu da combinação entre paixão por jogos e
+          O <span className="text-foreground font-semibold">Set Games</span> nasceu da combinação entre paixão por jogos e
           formação em Análise do Comportamento. Selecionamos drops gratuitos da Epic e Steam com um filtro além do hype:
           {" "}<span className="text-foreground">vale o tempo que você vai investir?</span>
         </p>

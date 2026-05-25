@@ -20,7 +20,7 @@ export const Route = createFileRoute("/cultura/$slug")({
     context.queryClient.ensureQueryData(postQueryOptions(params.slug)),
   head: ({ params, loaderData }) => {
     const title = loaderData?.title ?? params.slug;
-    const description = (loaderData?.excerpt ?? "Artigo de cultura gamer no Portal Gamer.").slice(0, 160);
+    const description = (loaderData?.excerpt ?? "Artigo de cultura gamer no Set Games.").slice(0, 160);
     const url = `https://setgames.lovable.app/cultura/${params.slug}`;
     return {
       meta: [

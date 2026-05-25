@@ -22,7 +22,7 @@ export function Header() {
             <Gamepad2 className="h-5 w-5" />
           </span>
           <span className="font-display text-lg font-bold tracking-tight">
-            portal<span className="text-gradient">.gamer</span>
+            Set Games
           </span>
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
