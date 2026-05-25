@@ -1,31 +1,68 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { PageShell } from "@/components/PageShell";
 import { fetchCulturePost } from "@/lib/queries";
 import { Calendar, ArrowLeft } from "lucide-react";
 
+const postQueryOptions = (slug: string) =>
+  queryOptions({
+    queryKey: ["culture", slug],
+    queryFn: async () => {
+      const post = await fetchCulturePost(slug);
+      if (!post) throw notFound();
+      return post;
+    },
+  });
+
 export const Route = createFileRoute("/cultura/$slug")({
   component: PostPage,
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} — Cultura Gamer` },
-    ],
-  }),
+  loader: ({ params, context }) =>
+    context.queryClient.ensureQueryData(postQueryOptions(params.slug)),
+  head: ({ params, loaderData }) => {
+    const title = loaderData?.title ?? params.slug;
+    const description = (loaderData?.excerpt ?? "Artigo de cultura gamer no Portal Gamer.").slice(0, 160);
+    const url = `https://setgames.lovable.app/cultura/${params.slug}`;
+    return {
+      meta: [
+        { title: `${title} — Cultura Gamer` },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+        ...(loaderData
+          ? [
+              { property: "article:published_time", content: new Date(loaderData.publishedAt).toISOString() },
+              { property: "article:author", content: loaderData.author },
+            ]
+          : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: loaderData
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: loaderData.title,
+                description: loaderData.excerpt,
+                datePublished: new Date(loaderData.publishedAt).toISOString(),
+                author: { "@type": "Person", name: loaderData.author },
+                mainEntityOfPage: url,
+              }),
+            },
+          ]
+        : [],
+    };
+  },
 });
 
 const fmt = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
 
 function PostPage() {
   const { slug } = Route.useParams();
-  const { data: post, isLoading } = useQuery({
-    queryKey: ["culture", slug],
-    queryFn: () => fetchCulturePost(slug),
-  });
-
-  if (isLoading) {
-    return <PageShell><div className="container mx-auto px-6 py-16 text-muted-foreground">Carregando...</div></PageShell>;
-  }
-  if (!post) throw notFound();
+  const { data: post } = useSuspenseQuery(postQueryOptions(slug));
 
   return (
     <PageShell>
