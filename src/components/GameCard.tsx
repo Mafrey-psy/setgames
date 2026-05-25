@@ -1,4 +1,5 @@
-import { Calendar, ExternalLink, Star } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Calendar, Star } from "lucide-react";
 import type { Game } from "@/lib/games";
 
 const fmt = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
@@ -9,10 +10,21 @@ export function GameCard({ game }: { game: Game }) {
   const platformColor = game.platform === "epic" ? "bg-primary/15 text-primary border-primary/30" : "bg-[oklch(0.65_0.18_230_/_0.15)] text-[oklch(0.78_0.18_230)] border-[oklch(0.65_0.18_230_/_0.3)]";
 
   return (
-    <article className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-b from-card to-background transition hover:border-primary/50 hover:shadow-[0_0_30px_oklch(0.72_0.25_305_/_0.25)]">
+    <Link
+      to="/jogos/$id"
+      params={{ id: game.id }}
+      className="group relative block overflow-hidden rounded-xl border border-border bg-gradient-to-b from-card to-background transition hover:border-primary/50 hover:shadow-[0_0_30px_oklch(0.72_0.25_305_/_0.25)]"
+    >
       <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${game.accent}`}>
-        <div className="absolute inset-0 bg-grid opacity-30 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        {game.imageUrl && (
+          <img
+            src={game.imageUrl}
+            alt={game.title}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute left-4 top-4 flex gap-2">
           <span className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur ${platformColor}`}>
             {game.platform}
@@ -27,7 +39,7 @@ export function GameCard({ game }: { game: Game }) {
         </h3>
       </div>
       <div className="space-y-3 p-5">
-        <p className="line-clamp-2 text-sm text-muted-foreground">{game.description}</p>
+        <p className="line-clamp-3 text-sm text-muted-foreground">{game.description}</p>
         <div className="flex flex-wrap gap-1.5">
           {game.genre.map((g) => (
             <span key={g} className="rounded-md bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
@@ -47,15 +59,10 @@ export function GameCard({ game }: { game: Game }) {
             </div>
           )}
         </div>
-        <a
-          href={game.url}
-          target="_blank"
-          rel="noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-        >
-          Resgatar agora <ExternalLink className="h-3.5 w-3.5" />
-        </a>
+        <div className="flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2 text-sm font-semibold text-primary-foreground transition group-hover:bg-primary/90">
+          Ver síntese de reviews →
+        </div>
       </div>
-    </article>
+    </Link>
   );
 }

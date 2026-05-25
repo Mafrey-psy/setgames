@@ -18,6 +18,7 @@ import { Route as EpicRouteImport } from './routes/epic'
 import { Route as CulturaRouteImport } from './routes/cultura'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JogosIdRouteImport } from './routes/jogos.$id'
 import { Route as CulturaSlugRouteImport } from './routes/cultura.$slug'
 import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
 import { Route as ApiPublicSyncGamesRouteImport } from './routes/api/public/sync-games'
@@ -69,6 +70,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JogosIdRoute = JogosIdRouteImport.update({
+  id: '/jogos/$id',
+  path: '/jogos/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CulturaSlugRoute = CulturaSlugRouteImport.update({
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/steam': typeof SteamRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
+  '/jogos/$id': typeof JogosIdRoute
   '/admin/culture': typeof AdminAdminCultureRoute
   '/admin/games': typeof AdminAdminGamesRoute
   '/admin/guides': typeof AdminAdminGuidesRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/steam': typeof SteamRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
+  '/jogos/$id': typeof JogosIdRoute
   '/admin/culture': typeof AdminAdminCultureRoute
   '/admin/games': typeof AdminAdminGamesRoute
   '/admin/guides': typeof AdminAdminGuidesRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/steam': typeof SteamRoute
   '/_admin/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
+  '/jogos/$id': typeof JogosIdRoute
   '/_admin/admin/culture': typeof AdminAdminCultureRoute
   '/_admin/admin/games': typeof AdminAdminGamesRoute
   '/_admin/admin/guides': typeof AdminAdminGuidesRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/steam'
     | '/admin'
     | '/cultura/$slug'
+    | '/jogos/$id'
     | '/admin/culture'
     | '/admin/games'
     | '/admin/guides'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/steam'
     | '/admin'
     | '/cultura/$slug'
+    | '/jogos/$id'
     | '/admin/culture'
     | '/admin/games'
     | '/admin/guides'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/steam'
     | '/_admin/admin'
     | '/cultura/$slug'
+    | '/jogos/$id'
     | '/_admin/admin/culture'
     | '/_admin/admin/games'
     | '/_admin/admin/guides'
@@ -236,6 +248,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   SteamRoute: typeof SteamRoute
+  JogosIdRoute: typeof JogosIdRoute
   ApiPublicSyncGamesRoute: typeof ApiPublicSyncGamesRoute
 }
 
@@ -302,6 +315,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jogos/$id': {
+      id: '/jogos/$id'
+      path: '/jogos/$id'
+      fullPath: '/jogos/$id'
+      preLoaderRoute: typeof JogosIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cultura/$slug': {
@@ -414,6 +434,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   SteamRoute: SteamRoute,
+  JogosIdRoute: JogosIdRoute,
   ApiPublicSyncGamesRoute: ApiPublicSyncGamesRoute,
 }
 export const routeTree = rootRouteImport

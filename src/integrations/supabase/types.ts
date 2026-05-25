@@ -77,10 +77,13 @@ export type Database = {
           free_until: string
           genre: string[]
           id: string
+          image_url: string | null
           original_price: string
           platform: string
           published: boolean
           rating: number
+          reviews_summary: string | null
+          reviews_summary_updated_at: string | null
           source_id: string | null
           title: string
           updated_at: string
@@ -94,10 +97,13 @@ export type Database = {
           free_until: string
           genre?: string[]
           id?: string
+          image_url?: string | null
           original_price: string
           platform: string
           published?: boolean
           rating?: number
+          reviews_summary?: string | null
+          reviews_summary_updated_at?: string | null
           source_id?: string | null
           title: string
           updated_at?: string
@@ -111,10 +117,13 @@ export type Database = {
           free_until?: string
           genre?: string[]
           id?: string
+          image_url?: string | null
           original_price?: string
           platform?: string
           published?: boolean
           rating?: number
+          reviews_summary?: string | null
+          reviews_summary_updated_at?: string | null
           source_id?: string | null
           title?: string
           updated_at?: string
