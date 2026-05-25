@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, Link, redirect, useNavigate } from "@tanstack/
 import { useAuth } from "@/lib/auth";
 import { PageShell } from "@/components/PageShell";
 import { useEffect } from "react";
-import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail } from "lucide-react";
+import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/_admin")({
   component: AdminLayout,
@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_admin")({
 
 const items = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/admin/sync", label: "Sincronização", icon: RefreshCw, exact: false },
   { to: "/admin/games", label: "Jogos", icon: Gamepad2, exact: false },
   { to: "/admin/guides", label: "Guias", icon: BookOpen, exact: false },
   { to: "/admin/culture", label: "Cultura", icon: Newspaper, exact: false },

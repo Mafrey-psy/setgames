@@ -19,6 +19,8 @@ import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CulturaSlugRouteImport } from './routes/cultura.$slug'
 import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
+import { Route as ApiPublicSyncGamesRouteImport } from './routes/api/public/sync-games'
+import { Route as AdminAdminSyncRouteImport } from './routes/_admin/admin.sync'
 import { Route as AdminAdminSubscribersRouteImport } from './routes/_admin/admin.subscribers'
 import { Route as AdminAdminGuidesRouteImport } from './routes/_admin/admin.guides'
 import { Route as AdminAdminGamesRouteImport } from './routes/_admin/admin.games'
@@ -73,6 +75,16 @@ const AdminAdminRoute = AdminAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicSyncGamesRoute = ApiPublicSyncGamesRouteImport.update({
+  id: '/api/public/sync-games',
+  path: '/api/public/sync-games',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAdminSyncRoute = AdminAdminSyncRouteImport.update({
+  id: '/sync',
+  path: '/sync',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
 const AdminAdminSubscribersRoute = AdminAdminSubscribersRouteImport.update({
   id: '/subscribers',
   path: '/subscribers',
@@ -108,6 +120,8 @@ export interface FileRoutesByFullPath {
   '/admin/games': typeof AdminAdminGamesRoute
   '/admin/guides': typeof AdminAdminGuidesRoute
   '/admin/subscribers': typeof AdminAdminSubscribersRoute
+  '/admin/sync': typeof AdminAdminSyncRoute
+  '/api/public/sync-games': typeof ApiPublicSyncGamesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -123,6 +137,8 @@ export interface FileRoutesByTo {
   '/admin/games': typeof AdminAdminGamesRoute
   '/admin/guides': typeof AdminAdminGuidesRoute
   '/admin/subscribers': typeof AdminAdminSubscribersRoute
+  '/admin/sync': typeof AdminAdminSyncRoute
+  '/api/public/sync-games': typeof ApiPublicSyncGamesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,6 +156,8 @@ export interface FileRoutesById {
   '/_admin/admin/games': typeof AdminAdminGamesRoute
   '/_admin/admin/guides': typeof AdminAdminGuidesRoute
   '/_admin/admin/subscribers': typeof AdminAdminSubscribersRoute
+  '/_admin/admin/sync': typeof AdminAdminSyncRoute
+  '/api/public/sync-games': typeof ApiPublicSyncGamesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -157,6 +175,8 @@ export interface FileRouteTypes {
     | '/admin/games'
     | '/admin/guides'
     | '/admin/subscribers'
+    | '/admin/sync'
+    | '/api/public/sync-games'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -172,6 +192,8 @@ export interface FileRouteTypes {
     | '/admin/games'
     | '/admin/guides'
     | '/admin/subscribers'
+    | '/admin/sync'
+    | '/api/public/sync-games'
   id:
     | '__root__'
     | '/'
@@ -188,6 +210,8 @@ export interface FileRouteTypes {
     | '/_admin/admin/games'
     | '/_admin/admin/guides'
     | '/_admin/admin/subscribers'
+    | '/_admin/admin/sync'
+    | '/api/public/sync-games'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -199,6 +223,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SobreRoute: typeof SobreRoute
   SteamRoute: typeof SteamRoute
+  ApiPublicSyncGamesRoute: typeof ApiPublicSyncGamesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -273,6 +298,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/sync-games': {
+      id: '/api/public/sync-games'
+      path: '/api/public/sync-games'
+      fullPath: '/api/public/sync-games'
+      preLoaderRoute: typeof ApiPublicSyncGamesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin/admin/sync': {
+      id: '/_admin/admin/sync'
+      path: '/sync'
+      fullPath: '/admin/sync'
+      preLoaderRoute: typeof AdminAdminSyncRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
     '/_admin/admin/subscribers': {
       id: '/_admin/admin/subscribers'
       path: '/subscribers'
@@ -309,6 +348,7 @@ interface AdminAdminRouteChildren {
   AdminAdminGamesRoute: typeof AdminAdminGamesRoute
   AdminAdminGuidesRoute: typeof AdminAdminGuidesRoute
   AdminAdminSubscribersRoute: typeof AdminAdminSubscribersRoute
+  AdminAdminSyncRoute: typeof AdminAdminSyncRoute
 }
 
 const AdminAdminRouteChildren: AdminAdminRouteChildren = {
@@ -316,6 +356,7 @@ const AdminAdminRouteChildren: AdminAdminRouteChildren = {
   AdminAdminGamesRoute: AdminAdminGamesRoute,
   AdminAdminGuidesRoute: AdminAdminGuidesRoute,
   AdminAdminSubscribersRoute: AdminAdminSubscribersRoute,
+  AdminAdminSyncRoute: AdminAdminSyncRoute,
 }
 
 const AdminAdminRouteWithChildren = AdminAdminRoute._addFileChildren(
@@ -352,6 +393,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SobreRoute: SobreRoute,
   SteamRoute: SteamRoute,
+  ApiPublicSyncGamesRoute: ApiPublicSyncGamesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

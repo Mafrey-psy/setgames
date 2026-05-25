@@ -63,6 +63,7 @@ export type Database = {
           platform: string
           published: boolean
           rating: number
+          source_id: string | null
           title: string
           updated_at: string
           url: string
@@ -79,6 +80,7 @@ export type Database = {
           platform: string
           published?: boolean
           rating?: number
+          source_id?: string | null
           title: string
           updated_at?: string
           url: string
@@ -95,6 +97,7 @@ export type Database = {
           platform?: string
           published?: boolean
           rating?: number
+          source_id?: string | null
           title?: string
           updated_at?: string
           url?: string
@@ -146,6 +149,42 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+        }
+        Relationships: []
+      }
+      sync_logs: {
+        Row: {
+          created_at: string
+          details: Json | null
+          error_count: number
+          id: string
+          inserted_count: number
+          message: string | null
+          skipped_count: number
+          source: string
+          updated_count: number
+        }
+        Insert: {
+          created_at?: string
+          details?: Json | null
+          error_count?: number
+          id?: string
+          inserted_count?: number
+          message?: string | null
+          skipped_count?: number
+          source: string
+          updated_count?: number
+        }
+        Update: {
+          created_at?: string
+          details?: Json | null
+          error_count?: number
+          id?: string
+          inserted_count?: number
+          message?: string | null
+          skipped_count?: number
+          source?: string
+          updated_count?: number
         }
         Relationships: []
       }
