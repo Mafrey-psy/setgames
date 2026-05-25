@@ -1,0 +1,12 @@
+# Portal Gamer
+
+> Curadoria semanal de jogos pagos liberados gratuitamente por tempo limitado (Epic, Steam) — sem free-to-play, sem ruído. Inclui guias rápidos e ensaios curtos de cultura gamer.
+
+## Pages
+
+- [Home](/): Destaques da semana de jogos grátis por tempo limitado.
+- [Epic Games](/epic): Jogos pagos atualmente grátis na Epic Games Store.
+- [Steam](/steam): Promoções 100% off e fins de semana grátis na Steam.
+- [Guias](/guias): Tutoriais curtos para resgatar jogos e configurar launchers.
+- [Cultura Gamer](/cultura): Ensaios editoriais sobre gêneros, comportamento e indústria.
+- [Sobre](/sobre): Sobre o projeto e o autor.
