@@ -1,15 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import { Gamepad2 } from "lucide-react";
+import { Gamepad2, LogOut, Shield, User } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 const nav = [
   { to: "/", label: "Início" },
   { to: "/epic", label: "Epic" },
   { to: "/steam", label: "Steam" },
   { to: "/guias", label: "Guias" },
+  { to: "/cultura", label: "Cultura" },
   { to: "/sobre", label: "Sobre" },
 ] as const;
 
 export function Header() {
+  const { user, isAdmin, signOut } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
@@ -34,12 +38,32 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <a
-          href="#newsletter"
-          className="hidden rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 sm:inline-block"
-        >
-          Assinar
-        </a>
+        <div className="hidden items-center gap-2 sm:flex">
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent transition hover:bg-accent/20"
+            >
+              <Shield className="h-3.5 w-3.5" /> Admin
+            </Link>
+          )}
+          {user ? (
+            <button
+              onClick={() => signOut()}
+              className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-muted-foreground transition hover:text-foreground"
+              title={user.email ?? undefined}
+            >
+              <LogOut className="h-4 w-4" /> Sair
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm font-medium transition hover:bg-secondary"
+            >
+              <User className="h-4 w-4" /> Entrar
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );

@@ -1,33 +1,38 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { GameCard } from "@/components/GameCard";
-import { getByPlatform } from "@/lib/games";
+import { fetchGames } from "@/lib/queries";
 
 export const Route = createFileRoute("/steam")({
   component: SteamPage,
   head: () => ({
     meta: [
-      { title: "Steam Free-to-Play — Portal Gamer" },
-      { name: "description", content: "Jogos gratuitos permanentes e promoções imperdíveis da Steam." },
+      { title: "Jogos grátis na Steam — Portal Gamer" },
+      { name: "description", content: "Promoções 100% off e fins de semana grátis na Steam." },
     ],
   }),
 });
 
 function SteamPage() {
-  const list = getByPlatform("steam");
+  const { data: list = [], isLoading } = useQuery({ queryKey: ["games", "steam"], queryFn: () => fetchGames("steam") });
   return (
     <PageShell>
       <PageHeader
         eyebrow="Steam"
-        title="Free-to-Play que valem a pena"
-        description="Jogos gratuitos permanentes da Steam que aguentam centenas de horas sem cobrar nada."
+        title="100% off por tempo limitado"
+        description="Jogos pagos da Steam liberados gratuitamente em janelas específicas. Sem free-to-play."
       />
       <section className="container mx-auto px-6 py-12">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {list.map((g) => (
-            <GameCard key={g.id} game={g} />
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="text-muted-foreground">Carregando...</p>
+        ) : list.length === 0 ? (
+          <p className="text-muted-foreground">Nenhum jogo grátis no momento.</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {list.map((g) => <GameCard key={g.id} game={g} />)}
+          </div>
+        )}
       </section>
     </PageShell>
   );
