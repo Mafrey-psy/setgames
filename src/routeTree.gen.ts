@@ -11,9 +11,18 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SteamRouteImport } from './routes/steam'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as GuiasRouteImport } from './routes/guias'
 import { Route as EpicRouteImport } from './routes/epic'
+import { Route as CulturaRouteImport } from './routes/cultura'
+import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CulturaSlugRouteImport } from './routes/cultura.$slug'
+import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
+import { Route as AdminAdminSubscribersRouteImport } from './routes/_admin/admin.subscribers'
+import { Route as AdminAdminGuidesRouteImport } from './routes/_admin/admin.guides'
+import { Route as AdminAdminGamesRouteImport } from './routes/_admin/admin.games'
+import { Route as AdminAdminCultureRouteImport } from './routes/_admin/admin.culture'
 
 const SteamRoute = SteamRouteImport.update({
   id: '/steam',
@@ -23,6 +32,11 @@ const SteamRoute = SteamRouteImport.update({
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuiasRoute = GuiasRouteImport.update({
@@ -35,46 +49,154 @@ const EpicRoute = EpicRouteImport.update({
   path: '/epic',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CulturaRoute = CulturaRouteImport.update({
+  id: '/cultura',
+  path: '/cultura',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CulturaSlugRoute = CulturaSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CulturaRoute,
+} as any)
+const AdminAdminRoute = AdminAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminSubscribersRoute = AdminAdminSubscribersRouteImport.update({
+  id: '/subscribers',
+  path: '/subscribers',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminGuidesRoute = AdminAdminGuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminGamesRoute = AdminAdminGamesRouteImport.update({
+  id: '/games',
+  path: '/games',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminCultureRoute = AdminAdminCultureRouteImport.update({
+  id: '/culture',
+  path: '/culture',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cultura': typeof CulturaRouteWithChildren
   '/epic': typeof EpicRoute
   '/guias': typeof GuiasRoute
+  '/login': typeof LoginRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
+  '/admin': typeof AdminAdminRouteWithChildren
+  '/cultura/$slug': typeof CulturaSlugRoute
+  '/admin/culture': typeof AdminAdminCultureRoute
+  '/admin/games': typeof AdminAdminGamesRoute
+  '/admin/guides': typeof AdminAdminGuidesRoute
+  '/admin/subscribers': typeof AdminAdminSubscribersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cultura': typeof CulturaRouteWithChildren
   '/epic': typeof EpicRoute
   '/guias': typeof GuiasRoute
+  '/login': typeof LoginRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
+  '/admin': typeof AdminAdminRouteWithChildren
+  '/cultura/$slug': typeof CulturaSlugRoute
+  '/admin/culture': typeof AdminAdminCultureRoute
+  '/admin/games': typeof AdminAdminGamesRoute
+  '/admin/guides': typeof AdminAdminGuidesRoute
+  '/admin/subscribers': typeof AdminAdminSubscribersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
+  '/cultura': typeof CulturaRouteWithChildren
   '/epic': typeof EpicRoute
   '/guias': typeof GuiasRoute
+  '/login': typeof LoginRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
+  '/_admin/admin': typeof AdminAdminRouteWithChildren
+  '/cultura/$slug': typeof CulturaSlugRoute
+  '/_admin/admin/culture': typeof AdminAdminCultureRoute
+  '/_admin/admin/games': typeof AdminAdminGamesRoute
+  '/_admin/admin/guides': typeof AdminAdminGuidesRoute
+  '/_admin/admin/subscribers': typeof AdminAdminSubscribersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/epic' | '/guias' | '/sobre' | '/steam'
+  fullPaths:
+    | '/'
+    | '/cultura'
+    | '/epic'
+    | '/guias'
+    | '/login'
+    | '/sobre'
+    | '/steam'
+    | '/admin'
+    | '/cultura/$slug'
+    | '/admin/culture'
+    | '/admin/games'
+    | '/admin/guides'
+    | '/admin/subscribers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/epic' | '/guias' | '/sobre' | '/steam'
-  id: '__root__' | '/' | '/epic' | '/guias' | '/sobre' | '/steam'
+  to:
+    | '/'
+    | '/cultura'
+    | '/epic'
+    | '/guias'
+    | '/login'
+    | '/sobre'
+    | '/steam'
+    | '/admin'
+    | '/cultura/$slug'
+    | '/admin/culture'
+    | '/admin/games'
+    | '/admin/guides'
+    | '/admin/subscribers'
+  id:
+    | '__root__'
+    | '/'
+    | '/_admin'
+    | '/cultura'
+    | '/epic'
+    | '/guias'
+    | '/login'
+    | '/sobre'
+    | '/steam'
+    | '/_admin/admin'
+    | '/cultura/$slug'
+    | '/_admin/admin/culture'
+    | '/_admin/admin/games'
+    | '/_admin/admin/guides'
+    | '/_admin/admin/subscribers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  CulturaRoute: typeof CulturaRouteWithChildren
   EpicRoute: typeof EpicRoute
   GuiasRoute: typeof GuiasRoute
+  LoginRoute: typeof LoginRoute
   SobreRoute: typeof SobreRoute
   SteamRoute: typeof SteamRoute
 }
@@ -95,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guias': {
       id: '/guias'
       path: '/guias'
@@ -109,6 +238,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EpicRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cultura': {
+      id: '/cultura'
+      path: '/cultura'
+      fullPath: '/cultura'
+      preLoaderRoute: typeof CulturaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -116,13 +259,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cultura/$slug': {
+      id: '/cultura/$slug'
+      path: '/$slug'
+      fullPath: '/cultura/$slug'
+      preLoaderRoute: typeof CulturaSlugRouteImport
+      parentRoute: typeof CulturaRoute
+    }
+    '/_admin/admin': {
+      id: '/_admin/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAdminRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/subscribers': {
+      id: '/_admin/admin/subscribers'
+      path: '/subscribers'
+      fullPath: '/admin/subscribers'
+      preLoaderRoute: typeof AdminAdminSubscribersRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/_admin/admin/guides': {
+      id: '/_admin/admin/guides'
+      path: '/guides'
+      fullPath: '/admin/guides'
+      preLoaderRoute: typeof AdminAdminGuidesRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/_admin/admin/games': {
+      id: '/_admin/admin/games'
+      path: '/games'
+      fullPath: '/admin/games'
+      preLoaderRoute: typeof AdminAdminGamesRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/_admin/admin/culture': {
+      id: '/_admin/admin/culture'
+      path: '/culture'
+      fullPath: '/admin/culture'
+      preLoaderRoute: typeof AdminAdminCultureRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
   }
 }
 
+interface AdminAdminRouteChildren {
+  AdminAdminCultureRoute: typeof AdminAdminCultureRoute
+  AdminAdminGamesRoute: typeof AdminAdminGamesRoute
+  AdminAdminGuidesRoute: typeof AdminAdminGuidesRoute
+  AdminAdminSubscribersRoute: typeof AdminAdminSubscribersRoute
+}
+
+const AdminAdminRouteChildren: AdminAdminRouteChildren = {
+  AdminAdminCultureRoute: AdminAdminCultureRoute,
+  AdminAdminGamesRoute: AdminAdminGamesRoute,
+  AdminAdminGuidesRoute: AdminAdminGuidesRoute,
+  AdminAdminSubscribersRoute: AdminAdminSubscribersRoute,
+}
+
+const AdminAdminRouteWithChildren = AdminAdminRoute._addFileChildren(
+  AdminAdminRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminAdminRoute: typeof AdminAdminRouteWithChildren
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminRoute: AdminAdminRouteWithChildren,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface CulturaRouteChildren {
+  CulturaSlugRoute: typeof CulturaSlugRoute
+}
+
+const CulturaRouteChildren: CulturaRouteChildren = {
+  CulturaSlugRoute: CulturaSlugRoute,
+}
+
+const CulturaRouteWithChildren =
+  CulturaRoute._addFileChildren(CulturaRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  CulturaRoute: CulturaRouteWithChildren,
   EpicRoute: EpicRoute,
   GuiasRoute: GuiasRoute,
+  LoginRoute: LoginRoute,
   SobreRoute: SobreRoute,
   SteamRoute: SteamRoute,
 }
