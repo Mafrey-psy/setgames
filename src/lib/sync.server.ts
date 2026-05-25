@@ -131,6 +131,7 @@ export async function runSync(trigger: string): Promise<{
           title: g.title, description: g.description, platform: g.platform,
           genre: g.genre, original_price: g.original_price, free_until: g.free_until,
           developer: g.developer, rating: g.rating, url: g.url, accent: g.accent,
+          published: true,
         }).eq("id", existing.id);
         if (error) throw error;
         updated++;
@@ -145,10 +146,22 @@ export async function runSync(trigger: string): Promise<{
         if (error) throw error;
         inserted++;
       }
+
     } catch (e: any) {
       errors++; skipped++;
       errorDetails.push(`${g.source_id}: ${e?.message ?? e}`);
     }
+  }
+
+  // Despublica jogos cuja promoção expirou (não estão mais grátis hoje)
+  try {
+    await supabaseAdmin
+      .from("games")
+      .update({ published: false })
+      .lt("free_until", new Date().toISOString())
+      .eq("published", true);
+  } catch (e: any) {
+    errorDetails.push(`unpublish-expired: ${e?.message ?? e}`);
   }
 
   const message = `[${trigger}] ${inserted} novos, ${updated} atualizados, ${errors} erros`;
