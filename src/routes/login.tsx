@@ -53,7 +53,7 @@ function LoginPage() {
         setLoading(false);
         return;
       }
-      await supabase.rpc("claim_admin_if_none");
+      
     }
     setLoading(false);
     navigate({ to: "/" });
