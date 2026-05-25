@@ -9,8 +9,12 @@ export const Route = createFileRoute("/steam")({
   head: () => ({
     meta: [
       { title: "Jogos grátis na Steam — Portal Gamer" },
-      { name: "description", content: "Promoções 100% off e fins de semana grátis na Steam." },
+      { name: "description", content: "Promoções 100% off e fins de semana grátis na Steam, com preço original e prazo claros." },
+      { property: "og:title", content: "Jogos grátis na Steam — Portal Gamer" },
+      { property: "og:description", content: "Promoções 100% off e fins de semana grátis na Steam, com preço original e prazo claros." },
+      { property: "og:url", content: "https://setgames.lovable.app/steam" },
     ],
+    links: [{ rel: "canonical", href: "https://setgames.lovable.app/steam" }],
   }),
 });
 

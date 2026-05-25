@@ -10,7 +10,11 @@ export const Route = createFileRoute("/cultura")({
     meta: [
       { title: "Cultura Gamer — Portal Gamer" },
       { name: "description", content: "Artigos curtos sobre cultura gamer: gêneros, comportamento, indústria e estética." },
+      { property: "og:title", content: "Cultura Gamer — Portal Gamer" },
+      { property: "og:description", content: "Artigos curtos sobre cultura gamer: gêneros, comportamento, indústria e estética." },
+      { property: "og:url", content: "https://setgames.lovable.app/cultura" },
     ],
+    links: [{ rel: "canonical", href: "https://setgames.lovable.app/cultura" }],
   }),
 });
 

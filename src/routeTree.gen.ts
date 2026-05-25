@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SteamRouteImport } from './routes/steam'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GuiasRouteImport } from './routes/guias'
 import { Route as EpicRouteImport } from './routes/epic'
@@ -34,6 +35,11 @@ const SteamRoute = SteamRouteImport.update({
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/epic': typeof EpicRoute
   '/guias': typeof GuiasRoute
   '/login': typeof LoginRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
   '/admin': typeof AdminAdminRouteWithChildren
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/epic': typeof EpicRoute
   '/guias': typeof GuiasRoute
   '/login': typeof LoginRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
   '/admin': typeof AdminAdminRouteWithChildren
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/epic': typeof EpicRoute
   '/guias': typeof GuiasRoute
   '/login': typeof LoginRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
   '/_admin/admin': typeof AdminAdminRouteWithChildren
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/epic'
     | '/guias'
     | '/login'
+    | '/sitemap.xml'
     | '/sobre'
     | '/steam'
     | '/admin'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/epic'
     | '/guias'
     | '/login'
+    | '/sitemap.xml'
     | '/sobre'
     | '/steam'
     | '/admin'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/epic'
     | '/guias'
     | '/login'
+    | '/sitemap.xml'
     | '/sobre'
     | '/steam'
     | '/_admin/admin'
@@ -221,6 +233,7 @@ export interface RootRouteChildren {
   EpicRoute: typeof EpicRoute
   GuiasRoute: typeof GuiasRoute
   LoginRoute: typeof LoginRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   SteamRoute: typeof SteamRoute
   ApiPublicSyncGamesRoute: typeof ApiPublicSyncGamesRoute
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/sobre'
       fullPath: '/sobre'
       preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -391,6 +411,7 @@ const rootRouteChildren: RootRouteChildren = {
   EpicRoute: EpicRoute,
   GuiasRoute: GuiasRoute,
   LoginRoute: LoginRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   SteamRoute: SteamRoute,
   ApiPublicSyncGamesRoute: ApiPublicSyncGamesRoute,

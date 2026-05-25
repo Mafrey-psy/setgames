@@ -7,8 +7,12 @@ export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
       { title: "Sobre — Portal Gamer" },
-      { name: "description", content: "Projeto independente que une curadoria gamer e análise comportamental." },
+      { name: "description", content: "Projeto independente que une curadoria gamer e análise comportamental, mantido por um psicólogo gamer." },
+      { property: "og:title", content: "Sobre — Portal Gamer" },
+      { property: "og:description", content: "Projeto independente que une curadoria gamer e análise comportamental." },
+      { property: "og:url", content: "https://setgames.lovable.app/sobre" },
     ],
+    links: [{ rel: "canonical", href: "https://setgames.lovable.app/sobre" }],
   }),
 });
 
