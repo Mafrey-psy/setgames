@@ -42,8 +42,6 @@ function LoginPage() {
         setLoading(false);
         return;
       }
-      // try to claim admin if first user
-      await supabase.rpc("claim_admin_if_none");
       toast.success("Conta criada!");
     } else {
       const { error } = await supabase.auth.signInWithPassword({
