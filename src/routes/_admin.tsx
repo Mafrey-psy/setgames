@@ -3,10 +3,28 @@ import { useAuth } from "@/lib/auth";
 import { PageShell } from "@/components/PageShell";
 import { useEffect } from "react";
 import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail, RefreshCw } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { checkIsAdmin } from "@/lib/admin-guard.functions";
 
 export const Route = createFileRoute("/_admin")({
+  beforeLoad: async () => {
+    const { data, error } = await supabase.auth.getUser();
+    if (error || !data.user) {
+      throw redirect({ to: "/login" });
+    }
+    try {
+      const res = await checkIsAdmin();
+      if (!res.isAdmin) {
+        throw redirect({ to: "/" });
+      }
+    } catch (e) {
+      if ((e as any)?.isRedirect) throw e;
+      throw redirect({ to: "/" });
+    }
+  },
   component: AdminLayout,
 });
+
 
 const items = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
