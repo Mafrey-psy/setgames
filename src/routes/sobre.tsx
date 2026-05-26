@@ -27,7 +27,7 @@ function SobrePage() {
           {" "}<span className="text-foreground">vale o tempo que você vai investir?</span>
         </p>
         <p className="mt-4 leading-relaxed text-muted-foreground">
-          Sem publi disfarçada, sem afiliado escondido, sem clickbait. Quinta-feira, 13h, lista pronta no seu e-mail.
+          Sem publi disfarçada, sem afiliado escondido, sem clickbait. Todos os dias, 13h, lista pronta no seu e-mail.
         </p>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-3">

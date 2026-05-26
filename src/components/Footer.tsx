@@ -22,7 +22,7 @@ export function Footer() {
         <div className="text-sm">
           <h4 className="mb-3 font-semibold">Sobre</h4>
           <p className="text-muted-foreground">
-            Projeto independente. Conteúdo verificado semanalmente. Sem patrocínio das publishers.
+            Projeto independente. Conteúdo verificado diariamente. Sem patrocínio das publishers.
           </p>
         </div>
       </div>

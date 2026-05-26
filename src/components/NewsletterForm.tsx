@@ -27,7 +27,7 @@ export function NewsletterForm() {
       else toast.error("Não foi possível inscrever. Tente de novo.");
       return;
     }
-    toast.success("Inscrição confirmada! Toda quinta-feira na sua caixa.");
+    toast.success("Inscrição confirmada! Diariamente na sua caixa.");
     setEmail("");
   };
 
