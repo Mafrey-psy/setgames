@@ -12,9 +12,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Set Games — Jogos grátis por tempo limitado" },
-      { name: "description", content: "Curadoria semanal dos melhores jogos grátis por tempo limitado na Epic e Steam. Sem free-to-play, sem ruído." },
+      { name: "description", content: "Curadoria diária dos melhores jogos grátis por tempo limitado na Epic e Steam. Sem free-to-play, sem ruído." },
       { property: "og:title", content: "Set Games — Jogos grátis por tempo limitado" },
-      { property: "og:description", content: "Curadoria semanal dos melhores jogos grátis por tempo limitado na Epic e Steam." },
+      { property: "og:description", content: "Curadoria diária dos melhores jogos grátis por tempo limitado na Epic e Steam." },
       { property: "og:url", content: "https://setgames.lovable.app/" },
     ],
     links: [{ rel: "canonical", href: "https://setgames.lovable.app/" }],
@@ -32,7 +32,7 @@ function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
         <div className="container relative mx-auto px-6 py-24 md:py-32">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
-            <Sparkles className="h-3 w-3" /> Atualizado toda quinta-feira
+            <Sparkles className="h-3 w-3" /> Atualizado diariamente
           </span>
           <h1 className="mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
             Seus jogos favoritos.<br />
@@ -63,7 +63,7 @@ function HomePage() {
           </Link>
         </div>
         {featured.length === 0 ? (
-          <p className="text-muted-foreground">Nenhum jogo grátis no momento. Volte na quinta!</p>
+          <p className="text-muted-foreground">Nenhum jogo grátis no momento. Volte amanhã!</p>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featured.map((g) => <GameCard key={g.id} game={g} />)}
@@ -73,9 +73,9 @@ function HomePage() {
 
       <section id="newsletter" className="border-t border-border/60 bg-card/30">
         <div className="container mx-auto max-w-2xl px-6 py-16 text-center">
-          <h2 className="font-display text-3xl font-bold">Receba a curadoria semanal</h2>
+          <h2 className="font-display text-3xl font-bold">Receba a curadoria diária</h2>
           <p className="mt-2 text-muted-foreground">
-            Toda quinta-feira: jogos grátis novos, sem spam, sem patrocínio.
+            Todos os dias: jogos grátis novos, sem spam, sem patrocínio.
           </p>
           <div className="mt-6">
             <NewsletterForm />
