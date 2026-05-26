@@ -13,6 +13,7 @@ interface NormalizedGame {
   rating: number;
   url: string;
   accent: string;
+  image_url: string | null;
 }
 
 const ACCENTS = {
@@ -32,6 +33,9 @@ async function fetchEpic(): Promise<NormalizedGame[]> {
   const out: NormalizedGame[] = [];
 
   for (const el of elements) {
+    const title: string = el?.title ?? "";
+    if (/mystery game/i.test(title)) continue;
+
     const promos = el?.promotions?.promotionalOffers?.[0]?.promotionalOffers ?? [];
     const active = promos.find((p: any) => {
       const start = new Date(p.startDate).getTime();
@@ -40,15 +44,29 @@ async function fetchEpic(): Promise<NormalizedGame[]> {
     });
     if (!active) continue;
 
-    // Skip free-to-play: must have an original (non-zero) price
-    const originalPrice: number = el?.price?.totalPrice?.originalPrice ?? 0;
-    if (!originalPrice || originalPrice <= 0) continue;
+    // Epic zeroes totalPrice.originalPrice during the free promo, so we cannot
+    // use it to filter F2P. The freeGamesPromotions feed only contains paid
+    // games on the weekly rotation, so trust the feed + the active promo.
+    const tp = el?.price?.totalPrice ?? {};
+    const fmtOriginal: string = tp?.fmtPrice?.originalPrice ?? "";
+    const displayPrice = fmtOriginal && fmtOriginal !== "0" ? fmtOriginal : "Pago";
 
-    const slug = el?.productSlug || el?.catalogNs?.mappings?.[0]?.pageSlug || el?.urlSlug;
+    const slug =
+      el?.offerMappings?.[0]?.pageSlug ||
+      el?.catalogNs?.mappings?.[0]?.pageSlug ||
+      el?.productSlug ||
+      el?.urlSlug;
     if (!slug) continue;
     const url = `https://store.epicgames.com/pt-BR/p/${String(slug).replace(/\/home$/, "")}`;
-    const fmt = el?.price?.totalPrice?.fmtPrice?.originalPrice || `R$ ${(originalPrice / 100).toFixed(2).replace(".", ",")}`;
-    const developer = el?.seller?.name || (el?.customAttributes ?? []).find((a: any) => a.key === "developerName")?.value || "Desconhecido";
+    const developer =
+      el?.seller?.name ||
+      (el?.customAttributes ?? []).find((a: any) => a.key === "developerName")?.value ||
+      "Desconhecido";
+    const keyImage =
+      (el?.keyImages ?? []).find((i: any) =>
+        ["OfferImageWide", "DieselStoreFrontWide", "VaultClosed", "Thumbnail"].includes(i.type),
+      ) || (el?.keyImages ?? [])[0];
+    const imageUrl: string | null = keyImage?.url ?? null;
 
     out.push({
       source_id: `epic:${el.id}`,
@@ -56,12 +74,13 @@ async function fetchEpic(): Promise<NormalizedGame[]> {
       description: (el.description || "").slice(0, 500),
       platform: "epic",
       genre: (el.tags ?? []).map((t: any) => t.name).filter(Boolean).slice(0, 4),
-      original_price: fmt,
+      original_price: displayPrice,
       free_until: new Date(active.endDate).toISOString(),
       developer,
       rating: 4.5,
       url,
       accent: ACCENTS.epic,
+      image_url: imageUrl,
     });
   }
   return out;
@@ -96,6 +115,7 @@ async function fetchSteam(): Promise<NormalizedGame[]> {
       rating: 4.3,
       url: `https://store.steampowered.com/app/${it.id}/`,
       accent: ACCENTS.steam,
+      image_url: it.header_image || it.large_capsule_image || null,
     });
   }
   return out;
@@ -131,7 +151,7 @@ export async function runSync(trigger: string): Promise<{
           title: g.title, description: g.description, platform: g.platform,
           genre: g.genre, original_price: g.original_price, free_until: g.free_until,
           developer: g.developer, rating: g.rating, url: g.url, accent: g.accent,
-          published: true,
+          image_url: g.image_url, published: true,
         }).eq("id", existing.id);
         if (error) throw error;
         updated++;
@@ -141,7 +161,7 @@ export async function runSync(trigger: string): Promise<{
           title: g.title, description: g.description, platform: g.platform,
           genre: g.genre, original_price: g.original_price, free_until: g.free_until,
           developer: g.developer, rating: g.rating, url: g.url, accent: g.accent,
-          published: true,
+          image_url: g.image_url, published: true,
         });
         if (error) throw error;
         inserted++;
