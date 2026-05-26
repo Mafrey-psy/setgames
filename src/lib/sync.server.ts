@@ -13,6 +13,7 @@ interface NormalizedGame {
   rating: number;
   url: string;
   accent: string;
+  image_url: string | null;
 }
 
 const ACCENTS = {
