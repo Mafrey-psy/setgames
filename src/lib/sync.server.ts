@@ -151,7 +151,7 @@ export async function runSync(trigger: string): Promise<{
           title: g.title, description: g.description, platform: g.platform,
           genre: g.genre, original_price: g.original_price, free_until: g.free_until,
           developer: g.developer, rating: g.rating, url: g.url, accent: g.accent,
-          published: true,
+          image_url: g.image_url, published: true,
         }).eq("id", existing.id);
         if (error) throw error;
         updated++;
@@ -161,7 +161,7 @@ export async function runSync(trigger: string): Promise<{
           title: g.title, description: g.description, platform: g.platform,
           genre: g.genre, original_price: g.original_price, free_until: g.free_until,
           developer: g.developer, rating: g.rating, url: g.url, accent: g.accent,
-          published: true,
+          image_url: g.image_url, published: true,
         });
         if (error) throw error;
         inserted++;
