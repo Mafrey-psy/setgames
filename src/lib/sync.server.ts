@@ -115,6 +115,7 @@ async function fetchSteam(): Promise<NormalizedGame[]> {
       rating: 4.3,
       url: `https://store.steampowered.com/app/${it.id}/`,
       accent: ACCENTS.steam,
+      image_url: it.header_image || it.large_capsule_image || null,
     });
   }
   return out;
