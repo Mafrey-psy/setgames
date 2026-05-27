@@ -1,9 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export const getGameReviewsSummary = createServerFn({ method: "POST" })
   .inputValidator((d: { id: string }) => {
-    if (!d?.id || typeof d.id !== "string") throw new Error("id obrigatório");
+    if (!d?.id || typeof d.id !== "string" || !UUID_RE.test(d.id)) {
+      throw new Error("id inválido");
+    }
     return d;
   })
   .handler(async ({ data }) => {
@@ -11,6 +15,7 @@ export const getGameReviewsSummary = createServerFn({ method: "POST" })
       .from("games")
       .select("id,title,developer,platform,genre,reviews_summary,reviews_summary_updated_at")
       .eq("id", data.id)
+      .eq("published", true)
       .maybeSingle();
     if (error) throw new Error(error.message);
     if (!game) throw new Error("Jogo não encontrado");
