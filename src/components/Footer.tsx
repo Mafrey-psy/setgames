@@ -24,6 +24,18 @@ export function Footer() {
           <p className="text-muted-foreground">
             Projeto independente. Conteúdo verificado diariamente. Sem patrocínio das publishers.
           </p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Dados de giveaways fornecidos por{" "}
+            <a
+              href="https://www.gamerpower.com"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-foreground"
+            >
+              GamerPower
+            </a>
+            .
+          </p>
         </div>
       </div>
       <div className="border-t border-border/60 py-4 text-center text-xs text-muted-foreground">
