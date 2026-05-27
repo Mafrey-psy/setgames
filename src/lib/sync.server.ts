@@ -121,6 +121,56 @@ async function fetchSteam(): Promise<NormalizedGame[]> {
   return out;
 }
 
+// GamerPower — rastreador de giveaways de jogos pagos liberados
+// Filtra: type=game (sem DLC/loot/beta), worth != N/A (exclui free-to-play),
+// status=Active e plataforma Steam ou Epic.
+async function fetchGamerPower(): Promise<NormalizedGame[]> {
+  const res = await fetch(
+    "https://www.gamerpower.com/api/giveaways?type=game&sort-by=value",
+    { headers: { "User-Agent": "Mozilla/5.0 PortalGamerBot", Accept: "application/json" } },
+  );
+  if (!res.ok) throw new Error(`GamerPower API ${res.status}`);
+  const items: any[] = await res.json();
+  const out: NormalizedGame[] = [];
+
+  for (const it of items) {
+    if (!it || it.status !== "Active") continue;
+    if (it.type && String(it.type).toLowerCase() !== "game") continue;
+    const worth = String(it.worth ?? "").trim();
+    if (!worth || worth === "N/A" || worth === "$0.00") continue; // exclui F2P
+
+    const platformsRaw = String(it.platforms ?? "").toLowerCase();
+    let platform: "epic" | "steam" | null = null;
+    if (platformsRaw.includes("epic")) platform = "epic";
+    else if (platformsRaw.includes("steam")) platform = "steam";
+    else continue;
+
+    // Apenas confirma que vai para a loja correta
+    const url = String(it.open_giveaway_url || it.gamerpower_url || "");
+    if (!url) continue;
+
+    const endDate = it.end_date && it.end_date !== "N/A"
+      ? new Date(it.end_date).toISOString()
+      : new Date(Date.now() + 7 * 86400000).toISOString();
+
+    out.push({
+      source_id: `gp:${it.id}`,
+      title: String(it.title ?? "").trim(),
+      description: String(it.description ?? "").slice(0, 500),
+      platform,
+      genre: [],
+      original_price: worth,
+      free_until: endDate,
+      developer: platform === "epic" ? "Epic Games Store" : "Steam",
+      rating: 4.3,
+      url,
+      accent: ACCENTS[platform],
+      image_url: it.image || it.thumbnail || null,
+    });
+  }
+  return out;
+}
+
 export async function runSync(trigger: string): Promise<{
   inserted: number; updated: number; skipped: number; errors: number; message: string;
 }> {
@@ -129,11 +179,13 @@ export async function runSync(trigger: string): Promise<{
   let games: NormalizedGame[] = [];
 
   try {
-    const [epic, steam] = await Promise.allSettled([fetchEpic(), fetchSteam()]);
+    const [epic, steam, gp] = await Promise.allSettled([fetchEpic(), fetchSteam(), fetchGamerPower()]);
     if (epic.status === "fulfilled") games.push(...epic.value);
     else { errors++; errorDetails.push(`epic: ${epic.reason}`); }
     if (steam.status === "fulfilled") games.push(...steam.value);
     else { errors++; errorDetails.push(`steam: ${steam.reason}`); }
+    if (gp.status === "fulfilled") games.push(...gp.value);
+    else { errors++; errorDetails.push(`gamerpower: ${gp.reason}`); }
   } catch (e: any) {
     errors++; errorDetails.push(String(e?.message ?? e));
   }
