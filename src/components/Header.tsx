@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Gamepad2, LogOut, Shield, User } from "lucide-react";
+import { Gamepad2, LogOut, Shield, MessageCircle } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { ContactDialog } from "@/components/ContactDialog";
 
 const nav = [
   { to: "/", label: "Início" },
@@ -37,8 +38,29 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <ContactDialog
+            trigger={
+              <button
+                type="button"
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+              >
+                Fale conosco
+              </button>
+            }
+          />
         </nav>
         <div className="hidden items-center gap-2 sm:flex">
+          <ContactDialog
+            trigger={
+              <button
+                type="button"
+                className="flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm font-medium transition hover:bg-secondary md:hidden"
+                aria-label="Fale conosco"
+              >
+                <MessageCircle className="h-4 w-4" />
+              </button>
+            }
+          />
           {isAdmin && (
             <Link
               to="/admin"
@@ -47,7 +69,7 @@ export function Header() {
               <Shield className="h-3.5 w-3.5" /> Admin
             </Link>
           )}
-          {user ? (
+          {user && (
             <button
               onClick={() => signOut()}
               className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-muted-foreground transition hover:text-foreground"
@@ -55,13 +77,6 @@ export function Header() {
             >
               <LogOut className="h-4 w-4" /> Sair
             </button>
-          ) : (
-            <Link
-              to="/login"
-              className="flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm font-medium transition hover:bg-secondary"
-            >
-              <User className="h-4 w-4" /> Entrar
-            </Link>
           )}
         </div>
       </div>
