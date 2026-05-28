@@ -191,8 +191,51 @@ export async function runSync(trigger: string): Promise<{
   }
 
   // Dedup by source_id
-  const seen = new Set<string>();
-  games = games.filter((g) => (seen.has(g.source_id) ? false : (seen.add(g.source_id), true)));
+  const seenIds = new Set<string>();
+  games = games.filter((g) => (seenIds.has(g.source_id) ? false : (seenIds.add(g.source_id), true)));
+
+  // Dedup por título+plataforma (mesmo jogo vindo de fontes diferentes, ex.: Epic feed + GamerPower).
+  // Prioridade de fonte: epic > steam > gp (oficiais antes de agregadores).
+  const sourcePriority = (id: string) =>
+    id.startsWith("epic:") ? 0 : id.startsWith("steam:") ? 1 : 2;
+  const normalizeTitle = (t: string) =>
+    t.toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[™®©]/g, "")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+
+  const byKey = new Map<string, NormalizedGame>();
+  for (const g of games) {
+    const key = `${g.platform}|${normalizeTitle(g.title)}`;
+    const existing = byKey.get(key);
+    if (!existing || sourcePriority(g.source_id) < sourcePriority(existing.source_id)) {
+      byKey.set(key, g);
+    }
+  }
+  games = Array.from(byKey.values());
+
+  // Marca como não publicado registros antigos cujo source_id divergente representa o mesmo
+  // título+plataforma que vamos sincronizar agora (evita ficar com duplicata legada no catálogo).
+  try {
+    const keepIds = games.map((g) => g.source_id);
+    const { data: existingRows } = await supabaseAdmin
+      .from("games")
+      .select("id, title, platform, source_id")
+      .eq("published", true);
+    const winners = new Set(games.map((g) => `${g.platform}|${normalizeTitle(g.title)}`));
+    const losers = (existingRows ?? []).filter((r: any) =>
+      winners.has(`${r.platform}|${normalizeTitle(r.title)}`) && !keepIds.includes(r.source_id),
+    );
+    if (losers.length) {
+      await supabaseAdmin
+        .from("games")
+        .update({ published: false })
+        .in("id", losers.map((r: any) => r.id));
+    }
+  } catch (e: any) {
+    errorDetails.push(`dedup-legacy: ${e?.message ?? e}`);
+  }
 
   for (const g of games) {
     try {
