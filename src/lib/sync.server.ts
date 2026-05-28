@@ -279,6 +279,30 @@ export async function runSync(trigger: string): Promise<{
     errorDetails.push(`unpublish-expired: ${e?.message ?? e}`);
   }
 
+  // Despublica qualquer jogo publicado que não apareça mais no feed ativo desta sincronização.
+  // Cobre o caso de promoções encerradas antes da data prevista (Epic/Steam removem do feed sem aviso).
+  // Só executa se pelo menos uma fonte respondeu com sucesso, para não limpar tudo em falha total.
+  try {
+    if (games.length > 0) {
+      const keepIds = new Set(games.map((g) => g.source_id));
+      const { data: published } = await supabaseAdmin
+        .from("games")
+        .select("id, source_id")
+        .eq("published", true);
+      const stale = (published ?? []).filter(
+        (r: any) => !r.source_id || !keepIds.has(r.source_id),
+      );
+      if (stale.length) {
+        await supabaseAdmin
+          .from("games")
+          .update({ published: false })
+          .in("id", stale.map((r: any) => r.id));
+      }
+    }
+  } catch (e: any) {
+    errorDetails.push(`unpublish-missing: ${e?.message ?? e}`);
+  }
+
   const message = `[${trigger}] ${inserted} novos, ${updated} atualizados, ${errors} erros`;
   await supabaseAdmin.from("sync_logs").insert({
     source: trigger, inserted_count: inserted, updated_count: updated,
