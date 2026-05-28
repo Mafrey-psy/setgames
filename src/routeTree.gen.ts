@@ -22,6 +22,7 @@ import { Route as JogosIdRouteImport } from './routes/jogos.$id'
 import { Route as CulturaSlugRouteImport } from './routes/cultura.$slug'
 import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
 import { Route as ApiPublicSyncGamesRouteImport } from './routes/api/public/sync-games'
+import { Route as AdminAdminTicketsRouteImport } from './routes/_admin/admin.tickets'
 import { Route as AdminAdminSyncRouteImport } from './routes/_admin/admin.sync'
 import { Route as AdminAdminSubscribersRouteImport } from './routes/_admin/admin.subscribers'
 import { Route as AdminAdminGuidesRouteImport } from './routes/_admin/admin.guides'
@@ -92,6 +93,11 @@ const ApiPublicSyncGamesRoute = ApiPublicSyncGamesRouteImport.update({
   path: '/api/public/sync-games',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAdminTicketsRoute = AdminAdminTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
 const AdminAdminSyncRoute = AdminAdminSyncRouteImport.update({
   id: '/sync',
   path: '/sync',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/admin/guides': typeof AdminAdminGuidesRoute
   '/admin/subscribers': typeof AdminAdminSubscribersRoute
   '/admin/sync': typeof AdminAdminSyncRoute
+  '/admin/tickets': typeof AdminAdminTicketsRoute
   '/api/public/sync-games': typeof ApiPublicSyncGamesRoute
 }
 export interface FileRoutesByTo {
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/admin/guides': typeof AdminAdminGuidesRoute
   '/admin/subscribers': typeof AdminAdminSubscribersRoute
   '/admin/sync': typeof AdminAdminSyncRoute
+  '/admin/tickets': typeof AdminAdminTicketsRoute
   '/api/public/sync-games': typeof ApiPublicSyncGamesRoute
 }
 export interface FileRoutesById {
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/_admin/admin/guides': typeof AdminAdminGuidesRoute
   '/_admin/admin/subscribers': typeof AdminAdminSubscribersRoute
   '/_admin/admin/sync': typeof AdminAdminSyncRoute
+  '/_admin/admin/tickets': typeof AdminAdminTicketsRoute
   '/api/public/sync-games': typeof ApiPublicSyncGamesRoute
 }
 export interface FileRouteTypes {
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/admin/guides'
     | '/admin/subscribers'
     | '/admin/sync'
+    | '/admin/tickets'
     | '/api/public/sync-games'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/admin/guides'
     | '/admin/subscribers'
     | '/admin/sync'
+    | '/admin/tickets'
     | '/api/public/sync-games'
   id:
     | '__root__'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/_admin/admin/guides'
     | '/_admin/admin/subscribers'
     | '/_admin/admin/sync'
+    | '/_admin/admin/tickets'
     | '/api/public/sync-games'
   fileRoutesById: FileRoutesById
 }
@@ -345,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicSyncGamesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_admin/admin/tickets': {
+      id: '/_admin/admin/tickets'
+      path: '/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AdminAdminTicketsRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
     '/_admin/admin/sync': {
       id: '/_admin/admin/sync'
       path: '/sync'
@@ -389,6 +408,7 @@ interface AdminAdminRouteChildren {
   AdminAdminGuidesRoute: typeof AdminAdminGuidesRoute
   AdminAdminSubscribersRoute: typeof AdminAdminSubscribersRoute
   AdminAdminSyncRoute: typeof AdminAdminSyncRoute
+  AdminAdminTicketsRoute: typeof AdminAdminTicketsRoute
 }
 
 const AdminAdminRouteChildren: AdminAdminRouteChildren = {
@@ -397,6 +417,7 @@ const AdminAdminRouteChildren: AdminAdminRouteChildren = {
   AdminAdminGuidesRoute: AdminAdminGuidesRoute,
   AdminAdminSubscribersRoute: AdminAdminSubscribersRoute,
   AdminAdminSyncRoute: AdminAdminSyncRoute,
+  AdminAdminTicketsRoute: AdminAdminTicketsRoute,
 }
 
 const AdminAdminRouteWithChildren = AdminAdminRoute._addFileChildren(

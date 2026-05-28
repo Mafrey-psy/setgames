@@ -32,6 +32,30 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_tickets: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          status?: string
+        }
+        Relationships: []
+      }
       culture_posts: {
         Row: {
           author: string
