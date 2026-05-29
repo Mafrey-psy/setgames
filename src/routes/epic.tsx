@@ -27,17 +27,18 @@ function EpicPage() {
         title="Grátis por tempo limitado"
         description="A Epic libera regularmente jogos pagos de graça. Resgate antes do prazo e o jogo é seu para sempre."
       />
-      <section className="container mx-auto px-6 py-12">
+      <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (
           <p className="text-muted-foreground">Nenhum jogo grátis no momento.</p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
             {list.map((g) => <GameCard key={g.id} game={g} />)}
           </div>
         )}
       </section>
+
     </PageShell>
   );
 }

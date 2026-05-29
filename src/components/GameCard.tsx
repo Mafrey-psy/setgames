@@ -39,7 +39,7 @@ export function GameCard({ game }: { game: Game }) {
           <Star className="h-3 w-3 fill-accent text-accent" />
           <span className="font-semibold">{game.rating.toFixed(1)}</span>
         </div>
-        <h3 className="absolute bottom-3 left-4 right-4 font-display text-xl font-bold leading-tight text-foreground drop-shadow-lg">
+        <h3 className="absolute bottom-3 left-4 right-4 font-display text-lg font-bold leading-tight text-foreground drop-shadow-lg sm:text-xl">
           {game.title}
         </h3>
       </div>
