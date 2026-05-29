@@ -1,7 +1,7 @@
 export function Footer() {
   return (
     <footer className="mt-24 border-t border-border/60 bg-card/40">
-      <div className="container mx-auto grid gap-8 px-6 py-12 md:grid-cols-3">
+      <div className="container mx-auto grid gap-8 px-4 py-10 sm:px-6 sm:py-12 md:grid-cols-3">
         <div>
           <h3 className="font-display text-lg font-bold">
             Set Games
