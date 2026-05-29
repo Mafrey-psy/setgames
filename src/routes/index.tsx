@@ -61,15 +61,26 @@ function HomePage() {
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Em destaque</p>
             <h2 className="mt-1 font-display text-3xl font-bold">Resgate antes que acabe</h2>
           </div>
-          <Link to="/epic" className="hidden text-sm text-muted-foreground hover:text-foreground sm:inline">
-            Ver tudo →
-          </Link>
+          {games.length > 3 && (
+            <button
+              onClick={() => setShowAll((v) => !v)}
+              className="hidden text-sm text-muted-foreground hover:text-foreground sm:inline-flex items-center gap-1"
+            >
+              {showAll ? (
+                <>
+                  Mostrar menos <ChevronUp className="h-4 w-4" />
+                </>
+              ) : (
+                <>Ver todos →</>
+              )}
+            </button>
+          )}
         </div>
-        {featured.length === 0 ? (
+        {displayedGames.length === 0 ? (
           <p className="text-muted-foreground">Nenhum jogo grátis no momento. Volte amanhã!</p>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featured.map((g) => <GameCard key={g.id} game={g} />)}
+            {displayedGames.map((g) => <GameCard key={g.id} game={g} />)}
           </div>
         )}
       </section>
