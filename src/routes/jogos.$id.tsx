@@ -60,7 +60,7 @@ function GamePage() {
 
   return (
     <PageShell>
-      <article className="container mx-auto max-w-3xl px-6 py-12">
+      <article className="container mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12">
         <Link to="/" className="mb-6 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-3 w-3" /> Voltar
         </Link>
@@ -79,7 +79,7 @@ function GamePage() {
                 <Star className="h-3 w-3 fill-accent text-accent" /> {game.rating.toFixed(1)}
               </span>
             </div>
-            <h1 className="font-display text-3xl font-bold leading-tight drop-shadow-lg md:text-5xl">{game.title}</h1>
+            <h1 className="font-display text-2xl font-bold leading-tight drop-shadow-lg sm:text-3xl md:text-5xl">{game.title}</h1>
             {game.developer && <p className="mt-1 text-sm text-muted-foreground">{game.developer}</p>}
           </div>
         </div>
@@ -107,7 +107,7 @@ function GamePage() {
           Resgatar agora <ExternalLink className="h-3.5 w-3.5" />
         </a>
 
-        <section className="mt-12 rounded-2xl border border-border bg-card/40 p-6 md:p-8">
+        <section className="mt-12 rounded-2xl border border-border bg-card/40 p-4 sm:p-6 md:p-8">
           <div className="mb-4 flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-accent" />
             <h2 className="font-display text-2xl font-bold">Síntese das reviews dos players</h2>

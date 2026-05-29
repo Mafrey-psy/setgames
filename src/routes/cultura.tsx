@@ -30,8 +30,9 @@ function CulturaPage() {
         title="Leituras curtas, ideias densas"
         description="Editorial sobre o que importa em jogos — sem review de release."
       />
-      <section className="container mx-auto px-6 py-12">
-        <div className="grid gap-6 md:grid-cols-2">
+      <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
+
           {posts.map((p) => (
             <Link
               key={p.id}

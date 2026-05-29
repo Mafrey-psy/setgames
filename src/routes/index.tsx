@@ -33,15 +33,15 @@ function HomePage() {
       <section className="relative overflow-hidden border-b border-border/60">
         <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
-        <div className="container relative mx-auto px-6 py-24 md:py-32">
+        <div className="container relative mx-auto px-4 py-16 sm:px-6 sm:py-24 md:py-32">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
             <Sparkles className="h-3 w-3" /> Atualizado diariamente
           </span>
-          <h1 className="mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
+          <h1 className="mt-6 max-w-3xl font-display text-4xl font-bold leading-[1.05] sm:text-5xl md:text-7xl">
             Seus jogos favoritos.<br />
             <span className="text-gradient">De graça. De verdade.</span>
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+          <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
             Só jogos pagos liberados por tempo limitado — nada de free-to-play disfarçado. Curadoria humana, sem clickbait.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -55,16 +55,16 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="container mx-auto px-6 py-16">
-        <div className="mb-8 flex items-end justify-between">
+      <section className="container mx-auto px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mb-8 flex items-end justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Em destaque</p>
-            <h2 className="mt-1 font-display text-3xl font-bold">Resgate antes que acabe</h2>
+            <h2 className="mt-1 font-display text-2xl font-bold sm:text-3xl">Resgate antes que acabe</h2>
           </div>
           {games.length > 3 && (
             <button
               onClick={() => setShowAll((v) => !v)}
-              className="hidden text-sm text-muted-foreground hover:text-foreground sm:inline-flex items-center gap-1"
+              className="inline-flex shrink-0 items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
             >
               {showAll ? (
                 <>
@@ -76,6 +76,7 @@ function HomePage() {
             </button>
           )}
         </div>
+
         {displayedGames.length === 0 ? (
           <p className="text-muted-foreground">Nenhum jogo grátis no momento. Volte amanhã!</p>
         ) : (

@@ -46,7 +46,7 @@ function GuiasPage() {
   return (
     <PageShell>
       <PageHeader eyebrow="Guias" title="Tutoriais sem enrolação" description="O que você precisa saber em menos de 7 minutos." />
-      <section className="container mx-auto px-6 py-12">
+      <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
         <div className="grid gap-5 md:grid-cols-2">
           {guides.map((g) => {
             const Icon = icons[g.icon] ?? BookOpen;
