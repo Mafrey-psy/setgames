@@ -20,8 +20,9 @@ function SobrePage() {
   return (
     <PageShell>
       <PageHeader eyebrow="Sobre" title="Curadoria com cabeça de psicólogo." />
-      <section className="container mx-auto max-w-3xl px-6 py-12">
-        <p className="text-lg leading-relaxed text-muted-foreground">
+      <section className="container mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12">
+        <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+
           O <span className="text-foreground font-semibold">Set Games</span> nasceu da combinação entre paixão por jogos e
           formação em Análise do Comportamento. Selecionamos drops gratuitos da Epic e Steam com um filtro além do hype:
           {" "}<span className="text-foreground">vale o tempo que você vai investir?</span>
