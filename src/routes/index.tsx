@@ -25,6 +25,8 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { data: games = [] } = useQuery({ queryKey: ["games"], queryFn: () => fetchGames() });
   const featured = games.slice(0, 3);
+  const [showAll, setShowAll] = useState(false);
+  const displayedGames = showAll ? games : featured;
 
   return (
     <PageShell>
