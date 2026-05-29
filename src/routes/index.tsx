@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronUp, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { GameCard } from "@/components/GameCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
