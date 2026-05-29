@@ -23,15 +23,16 @@ export function PageHeader({
 }) {
   return (
     <section className="border-b border-border/60 bg-card/30">
-      <div className="container mx-auto px-6 py-14">
+      <div className="container mx-auto px-4 py-10 sm:px-6 sm:py-14">
         {eyebrow && (
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
         )}
-        <h1 className="font-display text-4xl font-bold md:text-5xl">{title}</h1>
+        <h1 className="font-display text-3xl font-bold sm:text-4xl md:text-5xl">{title}</h1>
         {description && (
-          <p className="mt-3 max-w-2xl text-muted-foreground">{description}</p>
+          <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">{description}</p>
         )}
       </div>
     </section>
   );
+
 }
