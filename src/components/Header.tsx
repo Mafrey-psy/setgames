@@ -36,7 +36,7 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -61,7 +61,7 @@ export function Header() {
         </nav>
 
         {/* Desktop right actions */}
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {isAdmin && (
             <Link
               to="/admin"
@@ -85,7 +85,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setMobileOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition hover:bg-secondary md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition hover:bg-secondary lg:hidden"
           aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={mobileOpen}
         >
@@ -95,7 +95,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="border-t border-border/60 bg-background/95 backdrop-blur-xl md:hidden">
+        <div className="border-t border-border/60 bg-background/95 backdrop-blur-xl lg:hidden">
           <nav className="container mx-auto flex flex-col gap-1 px-4 py-4 sm:px-6">
             {nav.map((item) => (
               <Link
