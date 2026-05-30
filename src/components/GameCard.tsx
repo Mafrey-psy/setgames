@@ -44,7 +44,7 @@ export function GameCard({ game }: { game: Game }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute left-4 top-4 flex gap-2">
           <span className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur ${platformColor}`}>
-            {game.platform}
+            {platformLabel}
           </span>
         </div>
         <div className="absolute right-4 top-4 flex items-center gap-1 rounded bg-background/70 px-2 py-0.5 text-xs backdrop-blur">
