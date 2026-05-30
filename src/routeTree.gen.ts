@@ -9,12 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as XboxRouteImport } from './routes/xbox'
 import { Route as SteamRouteImport } from './routes/steam'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as PrimeRouteImport } from './routes/prime'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ItchRouteImport } from './routes/itch'
 import { Route as GuiasRouteImport } from './routes/guias'
+import { Route as GogRouteImport } from './routes/gog'
 import { Route as EpicRouteImport } from './routes/epic'
+import { Route as DiscordRouteImport } from './routes/discord'
 import { Route as CulturaRouteImport } from './routes/cultura'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -29,6 +34,11 @@ import { Route as AdminAdminGuidesRouteImport } from './routes/_admin/admin.guid
 import { Route as AdminAdminGamesRouteImport } from './routes/_admin/admin.games'
 import { Route as AdminAdminCultureRouteImport } from './routes/_admin/admin.culture'
 
+const XboxRoute = XboxRouteImport.update({
+  id: '/xbox',
+  path: '/xbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SteamRoute = SteamRouteImport.update({
   id: '/steam',
   path: '/steam',
@@ -44,9 +54,19 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrimeRoute = PrimeRouteImport.update({
+  id: '/prime',
+  path: '/prime',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItchRoute = ItchRouteImport.update({
+  id: '/itch',
+  path: '/itch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuiasRoute = GuiasRouteImport.update({
@@ -54,9 +74,19 @@ const GuiasRoute = GuiasRouteImport.update({
   path: '/guias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GogRoute = GogRouteImport.update({
+  id: '/gog',
+  path: '/gog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EpicRoute = EpicRouteImport.update({
   id: '/epic',
   path: '/epic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscordRoute = DiscordRouteImport.update({
+  id: '/discord',
+  path: '/discord',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CulturaRoute = CulturaRouteImport.update({
@@ -127,12 +157,17 @@ const AdminAdminCultureRoute = AdminAdminCultureRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cultura': typeof CulturaRouteWithChildren
+  '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
+  '/gog': typeof GogRoute
   '/guias': typeof GuiasRoute
+  '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
+  '/prime': typeof PrimeRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
+  '/xbox': typeof XboxRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
   '/jogos/$id': typeof JogosIdRoute
@@ -147,12 +182,17 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cultura': typeof CulturaRouteWithChildren
+  '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
+  '/gog': typeof GogRoute
   '/guias': typeof GuiasRoute
+  '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
+  '/prime': typeof PrimeRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
+  '/xbox': typeof XboxRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
   '/jogos/$id': typeof JogosIdRoute
@@ -169,12 +209,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_admin': typeof AdminRouteWithChildren
   '/cultura': typeof CulturaRouteWithChildren
+  '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
+  '/gog': typeof GogRoute
   '/guias': typeof GuiasRoute
+  '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
+  '/prime': typeof PrimeRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
+  '/xbox': typeof XboxRoute
   '/_admin/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
   '/jogos/$id': typeof JogosIdRoute
@@ -191,12 +236,17 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cultura'
+    | '/discord'
     | '/epic'
+    | '/gog'
     | '/guias'
+    | '/itch'
     | '/login'
+    | '/prime'
     | '/sitemap.xml'
     | '/sobre'
     | '/steam'
+    | '/xbox'
     | '/admin'
     | '/cultura/$slug'
     | '/jogos/$id'
@@ -211,12 +261,17 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cultura'
+    | '/discord'
     | '/epic'
+    | '/gog'
     | '/guias'
+    | '/itch'
     | '/login'
+    | '/prime'
     | '/sitemap.xml'
     | '/sobre'
     | '/steam'
+    | '/xbox'
     | '/admin'
     | '/cultura/$slug'
     | '/jogos/$id'
@@ -232,12 +287,17 @@ export interface FileRouteTypes {
     | '/'
     | '/_admin'
     | '/cultura'
+    | '/discord'
     | '/epic'
+    | '/gog'
     | '/guias'
+    | '/itch'
     | '/login'
+    | '/prime'
     | '/sitemap.xml'
     | '/sobre'
     | '/steam'
+    | '/xbox'
     | '/_admin/admin'
     | '/cultura/$slug'
     | '/jogos/$id'
@@ -254,18 +314,30 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CulturaRoute: typeof CulturaRouteWithChildren
+  DiscordRoute: typeof DiscordRoute
   EpicRoute: typeof EpicRoute
+  GogRoute: typeof GogRoute
   GuiasRoute: typeof GuiasRoute
+  ItchRoute: typeof ItchRoute
   LoginRoute: typeof LoginRoute
+  PrimeRoute: typeof PrimeRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   SteamRoute: typeof SteamRoute
+  XboxRoute: typeof XboxRoute
   JogosIdRoute: typeof JogosIdRoute
   ApiPublicSyncGamesRoute: typeof ApiPublicSyncGamesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/xbox': {
+      id: '/xbox'
+      path: '/xbox'
+      fullPath: '/xbox'
+      preLoaderRoute: typeof XboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/steam': {
       id: '/steam'
       path: '/steam'
@@ -287,11 +359,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prime': {
+      id: '/prime'
+      path: '/prime'
+      fullPath: '/prime'
+      preLoaderRoute: typeof PrimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/itch': {
+      id: '/itch'
+      path: '/itch'
+      fullPath: '/itch'
+      preLoaderRoute: typeof ItchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guias': {
@@ -301,11 +387,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gog': {
+      id: '/gog'
+      path: '/gog'
+      fullPath: '/gog'
+      preLoaderRoute: typeof GogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/epic': {
       id: '/epic'
       path: '/epic'
       fullPath: '/epic'
       preLoaderRoute: typeof EpicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discord': {
+      id: '/discord'
+      path: '/discord'
+      fullPath: '/discord'
+      preLoaderRoute: typeof DiscordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cultura': {
@@ -449,15 +549,30 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CulturaRoute: CulturaRouteWithChildren,
+  DiscordRoute: DiscordRoute,
   EpicRoute: EpicRoute,
+  GogRoute: GogRoute,
   GuiasRoute: GuiasRoute,
+  ItchRoute: ItchRoute,
   LoginRoute: LoginRoute,
+  PrimeRoute: PrimeRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   SteamRoute: SteamRoute,
+  XboxRoute: XboxRoute,
   JogosIdRoute: JogosIdRoute,
   ApiPublicSyncGamesRoute: ApiPublicSyncGamesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
