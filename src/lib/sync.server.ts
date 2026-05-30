@@ -164,12 +164,16 @@ async function fetchGamerPower(): Promise<NormalizedGame[]> {
     if (!worth || worth === "N/A" || worth === "$0.00") continue; // exclui F2P
 
     const platformsRaw = String(it.platforms ?? "").toLowerCase();
-    let platform: "epic" | "steam" | null = null;
+    let platform: SupportedPlatform | null = null;
     if (platformsRaw.includes("epic")) platform = "epic";
     else if (platformsRaw.includes("steam")) platform = "steam";
+    else if (platformsRaw.includes("gog") || platformsRaw.includes("drm-free")) platform = "gog";
+    else if (platformsRaw.includes("amazon")) platform = "amazon";
+    else if (platformsRaw.includes("itch")) platform = "itch";
+    else if (platformsRaw.includes("xbox")) platform = "xbox";
+    else if (platformsRaw.includes("discord")) platform = "discord";
     else continue;
 
-    // Apenas confirma que vai para a loja correta
     const url = String(it.open_giveaway_url || it.gamerpower_url || "");
     if (!url) continue;
 
@@ -185,7 +189,7 @@ async function fetchGamerPower(): Promise<NormalizedGame[]> {
       genre: [],
       original_price: worth,
       free_until: endDate,
-      developer: platform === "epic" ? "Epic Games Store" : "Steam",
+      developer: DEVELOPER_LABEL[platform],
       rating: 4.3,
       url,
       accent: ACCENTS[platform],
