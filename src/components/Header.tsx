@@ -27,10 +27,10 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
         <Link to="/" className="group flex items-center gap-2" onClick={close}>
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-primary/15 text-primary transition group-hover:bg-primary/25">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-primary/15 text-primary transition group-hover:bg-primary/25">
             <Gamepad2 className="h-5 w-5" />
           </span>
-          <span className="font-display text-lg font-bold tracking-tight">
+          <span className="whitespace-nowrap font-display text-lg font-bold tracking-tight">
             Set Games
           </span>
         </Link>
