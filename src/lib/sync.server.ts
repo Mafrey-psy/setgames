@@ -1,11 +1,20 @@
 // Server-only: free games sync logic (Epic + Steam)
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+type SupportedPlatform =
+  | "epic"
+  | "steam"
+  | "gog"
+  | "amazon"
+  | "itch"
+  | "xbox"
+  | "discord";
+
 interface NormalizedGame {
   source_id: string;
   title: string;
   description: string;
-  platform: "epic" | "steam";
+  platform: SupportedPlatform;
   genre: string[];
   original_price: string;
   free_until: string; // ISO
@@ -16,10 +25,25 @@ interface NormalizedGame {
   image_url: string | null;
 }
 
-const ACCENTS = {
+const ACCENTS: Record<SupportedPlatform, string> = {
   epic: "from-fuchsia-600 to-rose-500",
   steam: "from-sky-500 to-indigo-600",
-} as const;
+  gog: "from-purple-600 to-violet-700",
+  amazon: "from-amber-500 to-orange-600",
+  itch: "from-red-500 to-pink-600",
+  xbox: "from-emerald-500 to-green-700",
+  discord: "from-indigo-500 to-blue-600",
+};
+
+const DEVELOPER_LABEL: Record<SupportedPlatform, string> = {
+  epic: "Epic Games Store",
+  steam: "Steam",
+  gog: "GOG",
+  amazon: "Prime Gaming",
+  itch: "Itch.io",
+  xbox: "Xbox",
+  discord: "Discord",
+};
 
 async function fetchEpic(): Promise<NormalizedGame[]> {
   const res = await fetch(
@@ -140,12 +164,16 @@ async function fetchGamerPower(): Promise<NormalizedGame[]> {
     if (!worth || worth === "N/A" || worth === "$0.00") continue; // exclui F2P
 
     const platformsRaw = String(it.platforms ?? "").toLowerCase();
-    let platform: "epic" | "steam" | null = null;
+    let platform: SupportedPlatform | null = null;
     if (platformsRaw.includes("epic")) platform = "epic";
     else if (platformsRaw.includes("steam")) platform = "steam";
+    else if (platformsRaw.includes("gog") || platformsRaw.includes("drm-free")) platform = "gog";
+    else if (platformsRaw.includes("amazon")) platform = "amazon";
+    else if (platformsRaw.includes("itch")) platform = "itch";
+    else if (platformsRaw.includes("xbox")) platform = "xbox";
+    else if (platformsRaw.includes("discord")) platform = "discord";
     else continue;
 
-    // Apenas confirma que vai para a loja correta
     const url = String(it.open_giveaway_url || it.gamerpower_url || "");
     if (!url) continue;
 
@@ -161,7 +189,7 @@ async function fetchGamerPower(): Promise<NormalizedGame[]> {
       genre: [],
       original_price: worth,
       free_until: endDate,
-      developer: platform === "epic" ? "Epic Games Store" : "Steam",
+      developer: DEVELOPER_LABEL[platform],
       rating: 4.3,
       url,
       accent: ACCENTS[platform],

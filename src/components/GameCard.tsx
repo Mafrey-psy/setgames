@@ -1,14 +1,26 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Calendar, ExternalLink, Star } from "lucide-react";
 import type { Game } from "@/lib/games";
+import { PLATFORM_LABELS } from "@/lib/games";
 
 const fmt = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
+
+const PLATFORM_BADGE: Record<string, string> = {
+  epic: "bg-primary/15 text-primary border-primary/30",
+  steam: "bg-[oklch(0.65_0.18_230_/_0.15)] text-[oklch(0.78_0.18_230)] border-[oklch(0.65_0.18_230_/_0.3)]",
+  gog: "bg-[oklch(0.55_0.22_300_/_0.15)] text-[oklch(0.78_0.18_300)] border-[oklch(0.55_0.22_300_/_0.3)]",
+  amazon: "bg-[oklch(0.7_0.18_70_/_0.15)] text-[oklch(0.82_0.16_70)] border-[oklch(0.7_0.18_70_/_0.3)]",
+  itch: "bg-[oklch(0.65_0.22_25_/_0.15)] text-[oklch(0.78_0.2_25)] border-[oklch(0.65_0.22_25_/_0.3)]",
+  xbox: "bg-[oklch(0.65_0.18_150_/_0.15)] text-[oklch(0.78_0.18_150)] border-[oklch(0.65_0.18_150_/_0.3)]",
+  discord: "bg-[oklch(0.6_0.18_265_/_0.15)] text-[oklch(0.78_0.16_265)] border-[oklch(0.6_0.18_265_/_0.3)]",
+};
 
 export function GameCard({ game }: { game: Game }) {
   const navigate = useNavigate();
   const expires = new Date(game.freeUntil);
   const showExpiry = expires.getFullYear() < 2099;
-  const platformColor = game.platform === "epic" ? "bg-primary/15 text-primary border-primary/30" : "bg-[oklch(0.65_0.18_230_/_0.15)] text-[oklch(0.78_0.18_230)] border-[oklch(0.65_0.18_230_/_0.3)]";
+  const platformColor = PLATFORM_BADGE[game.platform] ?? "bg-secondary text-secondary-foreground border-border";
+  const platformLabel = PLATFORM_LABELS[game.platform as keyof typeof PLATFORM_LABELS] ?? game.platform;
 
   const openReviews = () => navigate({ to: "/jogos/$id", params: { id: game.id } });
 
@@ -32,7 +44,7 @@ export function GameCard({ game }: { game: Game }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute left-4 top-4 flex gap-2">
           <span className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur ${platformColor}`}>
-            {game.platform}
+            {platformLabel}
           </span>
         </div>
         <div className="absolute right-4 top-4 flex items-center gap-1 rounded bg-background/70 px-2 py-0.5 text-xs backdrop-blur">
