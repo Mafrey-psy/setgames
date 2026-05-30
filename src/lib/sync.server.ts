@@ -199,6 +199,51 @@ async function fetchGamerPower(): Promise<NormalizedGame[]> {
   return out;
 }
 
+// Validação final: garante que só jogos PAGOS com 100% off entrem no catálogo.
+// Rejeita free-to-play, demos, betas, betas abertos, servidores privados, etc.
+const F2P_PATTERNS = [
+  /free[\s-]?to[\s-]?play/i,
+  /\bf2p\b/i,
+  /\bdemo\b/i,
+  /\bbeta\b/i,
+  /\balpha\b/i,
+  /\bplaytest\b/i,
+  /\bopen\s+test\b/i,
+  /\bearly\s+access\s+key\b/i,
+  /\bserver\s+access\b/i,
+  /\bin-?game\b/i,
+  /\bdlc\b/i,
+  /\bloot\b/i,
+  /\bskin\b/i,
+  /\bcurrency\b/i,
+  /\bcoins?\b/i,
+  /\bgems?\b/i,
+  /\bbooster\b/i,
+  /\bpack\b/i,
+];
+
+function isPaidFreebie(g: NormalizedGame): boolean {
+  const price = (g.original_price ?? "").trim();
+  if (!price) return false;
+  const lower = price.toLowerCase();
+  if (["pago"].includes(lower)) {
+    // marcador interno do Epic, ok
+  } else {
+    // Preço precisa conter dígito > 0 (R$ 0,00 / $0.00 / 0 são F2P)
+    const numeric = price.replace(/[^\d.,]/g, "").replace(",", ".");
+    const value = parseFloat(numeric);
+    if (!isFinite(value) || value <= 0) {
+      if (!/^pago$/i.test(price)) return false;
+    }
+    if (/^(free|gratis|grátis|n\/a)$/i.test(price)) return false;
+  }
+
+  const haystack = `${g.title}\n${g.description}`;
+  if (F2P_PATTERNS.some((re) => re.test(haystack))) return false;
+
+  return true;
+}
+
 export async function runSync(trigger: string): Promise<{
   inserted: number; updated: number; skipped: number; errors: number; message: string;
 }> {
