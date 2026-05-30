@@ -288,6 +288,12 @@ export async function runSync(trigger: string): Promise<{
   }
   games = Array.from(byKey.values());
 
+  // Validação final: descarta qualquer item que não seja jogo pago 100% off.
+  const beforeValidation = games.length;
+  games = games.filter(isPaidFreebie);
+  const rejected = beforeValidation - games.length;
+  if (rejected > 0) skipped += rejected;
+
   // Marca como não publicado registros antigos cujo source_id divergente representa o mesmo
   // título+plataforma que vamos sincronizar agora (evita ficar com duplicata legada no catálogo).
   try {
