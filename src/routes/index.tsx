@@ -80,7 +80,7 @@ function HomePage() {
         {displayedGames.length === 0 ? (
           <p className="text-muted-foreground">Nenhum jogo grátis no momento. Volte amanhã!</p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {displayedGames.map((g) => <GameCard key={g.id} game={g} />)}
           </div>
         )}
