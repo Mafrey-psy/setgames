@@ -95,7 +95,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="border-t border-border/60 bg-background/95 backdrop-blur-xl lg:hidden">
+        <div className="border-t border-border/60 bg-background/95 backdrop-blur-xl xl:hidden">
           <nav className="container mx-auto flex flex-col gap-1 px-4 py-4 sm:px-6">
             {nav.map((item) => (
               <Link
