@@ -33,22 +33,22 @@ function HomePage() {
       <section className="relative overflow-hidden border-b border-border/60">
         <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
-        <div className="container relative mx-auto px-4 py-16 sm:px-6 sm:py-24 md:py-32">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
+        <div className="container relative mx-auto px-4 py-14 sm:px-6 sm:py-20 md:py-28 lg:py-32">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent sm:text-xs">
             <Sparkles className="h-3 w-3" /> Atualizado diariamente
           </span>
-          <h1 className="mt-6 max-w-3xl font-display text-4xl font-bold leading-[1.05] sm:text-5xl md:text-7xl">
+          <h1 className="mt-5 max-w-3xl font-display text-[2rem] font-bold leading-[1.1] sm:mt-6 sm:text-5xl md:text-6xl lg:text-7xl">
             Seus jogos favoritos.<br />
             <span className="text-gradient">De graça. De verdade.</span>
           </h1>
-          <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
+          <p className="mt-4 max-w-xl text-sm text-muted-foreground sm:mt-5 sm:text-base lg:text-lg">
             Só jogos pagos liberados por tempo limitado — nada de free-to-play disfarçado. Curadoria humana, sem clickbait.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/epic" className="flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 glow-purple">
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link to="/epic" className="flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 glow-purple">
               Ver jogos Epic <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/steam" className="rounded-md border border-border bg-card/50 px-5 py-3 text-sm font-semibold transition hover:bg-secondary">
+            <Link to="/steam" className="flex items-center justify-center rounded-md border border-border bg-card/50 px-5 py-3 text-sm font-semibold transition hover:bg-secondary">
               Promoções Steam
             </Link>
           </div>
@@ -80,15 +80,15 @@ function HomePage() {
         {displayedGames.length === 0 ? (
           <p className="text-muted-foreground">Nenhum jogo grátis no momento. Volte amanhã!</p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {displayedGames.map((g) => <GameCard key={g.id} game={g} />)}
           </div>
         )}
       </section>
 
       <section id="newsletter" className="border-t border-border/60 bg-card/30">
-        <div className="container mx-auto max-w-2xl px-6 py-16 text-center">
-          <h2 className="font-display text-3xl font-bold">Receba a curadoria diária</h2>
+        <div className="container mx-auto max-w-2xl px-4 py-12 text-center sm:px-6 sm:py-16">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">Receba a curadoria diária</h2>
           <p className="mt-2 text-muted-foreground">
             Todos os dias: jogos grátis novos, sem spam, sem patrocínio.
           </p>
