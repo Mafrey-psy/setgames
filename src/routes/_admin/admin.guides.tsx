@@ -19,14 +19,14 @@ function AdminGuides() {
       return data as any[];
     },
   });
-  const [form, setForm] = useState({ title: "", description: "", icon: "BookOpen", read_time: "5 min" });
+  const [form, setForm] = useState({ title: "", description: "", icon: "BookOpen", read_time: "5 min", content: "" });
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     const { error } = await supabase.from("guides").insert(form);
     if (error) return toast.error(error.message);
     toast.success("Guia adicionado");
-    setForm({ title: "", description: "", icon: "BookOpen", read_time: "5 min" });
+    setForm({ title: "", description: "", icon: "BookOpen", read_time: "5 min", content: "" });
     qc.invalidateQueries({ queryKey: ["admin-guides"] });
     qc.invalidateQueries({ queryKey: ["guides"] });
   };
@@ -46,6 +46,7 @@ function AdminGuides() {
         <Field label="Ícone (Download, Settings, Trophy, BookOpen)"><input value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} className={inp} /></Field>
         <Field label="Descrição" full><textarea required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inp} rows={2} /></Field>
         <Field label="Tempo de leitura"><input value={form.read_time} onChange={(e) => setForm({ ...form, read_time: e.target.value })} className={inp} /></Field>
+        <Field label="Conteúdo (parágrafos separados por linha em branco)" full><textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} className={inp} rows={8} /></Field>
         <div className="md:col-span-2"><button className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"><Plus className="h-4 w-4" /> Adicionar</button></div>
       </form>
 

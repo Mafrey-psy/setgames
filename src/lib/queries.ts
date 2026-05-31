@@ -7,6 +7,7 @@ export interface Guide {
   description: string;
   icon: string;
   readTime: string;
+  content: string;
 }
 
 export interface CulturePost {
@@ -66,13 +67,25 @@ export async function fetchGuides(): Promise<Guide[]> {
     .eq("published", true)
     .order("created_at", { ascending: true });
   if (error) throw error;
-  return (data ?? []).map((r: any) => ({
+  return (data ?? []).map(rowToGuide);
+}
+
+export async function fetchGuide(id: string): Promise<Guide | null> {
+  const { data, error } = await supabase
+    .from("guides").select("*").eq("id", id).eq("published", true).maybeSingle();
+  if (error) throw error;
+  return data ? rowToGuide(data) : null;
+}
+
+function rowToGuide(r: any): Guide {
+  return {
     id: r.id,
     title: r.title,
     description: r.description,
     icon: r.icon,
     readTime: r.read_time,
-  }));
+    content: r.content ?? "",
+  };
 }
 
 export async function fetchCulturePosts(): Promise<CulturePost[]> {

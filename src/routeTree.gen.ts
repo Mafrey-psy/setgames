@@ -24,6 +24,7 @@ import { Route as CulturaRouteImport } from './routes/cultura'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JogosIdRouteImport } from './routes/jogos.$id'
+import { Route as GuiasIdRouteImport } from './routes/guias.$id'
 import { Route as CulturaSlugRouteImport } from './routes/cultura.$slug'
 import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
 import { Route as ApiPublicSyncGamesRouteImport } from './routes/api/public/sync-games'
@@ -108,6 +109,11 @@ const JogosIdRoute = JogosIdRouteImport.update({
   path: '/jogos/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuiasIdRoute = GuiasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => GuiasRoute,
+} as any)
 const CulturaSlugRoute = CulturaSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -160,7 +166,7 @@ export interface FileRoutesByFullPath {
   '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
   '/gog': typeof GogRoute
-  '/guias': typeof GuiasRoute
+  '/guias': typeof GuiasRouteWithChildren
   '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
   '/prime': typeof PrimeRoute
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/xbox': typeof XboxRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
+  '/guias/$id': typeof GuiasIdRoute
   '/jogos/$id': typeof JogosIdRoute
   '/admin/culture': typeof AdminAdminCultureRoute
   '/admin/games': typeof AdminAdminGamesRoute
@@ -185,7 +192,7 @@ export interface FileRoutesByTo {
   '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
   '/gog': typeof GogRoute
-  '/guias': typeof GuiasRoute
+  '/guias': typeof GuiasRouteWithChildren
   '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
   '/prime': typeof PrimeRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/xbox': typeof XboxRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
+  '/guias/$id': typeof GuiasIdRoute
   '/jogos/$id': typeof JogosIdRoute
   '/admin/culture': typeof AdminAdminCultureRoute
   '/admin/games': typeof AdminAdminGamesRoute
@@ -212,7 +220,7 @@ export interface FileRoutesById {
   '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
   '/gog': typeof GogRoute
-  '/guias': typeof GuiasRoute
+  '/guias': typeof GuiasRouteWithChildren
   '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
   '/prime': typeof PrimeRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/xbox': typeof XboxRoute
   '/_admin/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
+  '/guias/$id': typeof GuiasIdRoute
   '/jogos/$id': typeof JogosIdRoute
   '/_admin/admin/culture': typeof AdminAdminCultureRoute
   '/_admin/admin/games': typeof AdminAdminGamesRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/xbox'
     | '/admin'
     | '/cultura/$slug'
+    | '/guias/$id'
     | '/jogos/$id'
     | '/admin/culture'
     | '/admin/games'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/xbox'
     | '/admin'
     | '/cultura/$slug'
+    | '/guias/$id'
     | '/jogos/$id'
     | '/admin/culture'
     | '/admin/games'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/xbox'
     | '/_admin/admin'
     | '/cultura/$slug'
+    | '/guias/$id'
     | '/jogos/$id'
     | '/_admin/admin/culture'
     | '/_admin/admin/games'
@@ -317,7 +329,7 @@ export interface RootRouteChildren {
   DiscordRoute: typeof DiscordRoute
   EpicRoute: typeof EpicRoute
   GogRoute: typeof GogRoute
-  GuiasRoute: typeof GuiasRoute
+  GuiasRoute: typeof GuiasRouteWithChildren
   ItchRoute: typeof ItchRoute
   LoginRoute: typeof LoginRoute
   PrimeRoute: typeof PrimeRoute
@@ -436,6 +448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JogosIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guias/$id': {
+      id: '/guias/$id'
+      path: '/$id'
+      fullPath: '/guias/$id'
+      preLoaderRoute: typeof GuiasIdRouteImport
+      parentRoute: typeof GuiasRoute
+    }
     '/cultura/$slug': {
       id: '/cultura/$slug'
       path: '/$slug'
@@ -545,6 +564,16 @@ const CulturaRouteChildren: CulturaRouteChildren = {
 const CulturaRouteWithChildren =
   CulturaRoute._addFileChildren(CulturaRouteChildren)
 
+interface GuiasRouteChildren {
+  GuiasIdRoute: typeof GuiasIdRoute
+}
+
+const GuiasRouteChildren: GuiasRouteChildren = {
+  GuiasIdRoute: GuiasIdRoute,
+}
+
+const GuiasRouteWithChildren = GuiasRoute._addFileChildren(GuiasRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -552,7 +581,7 @@ const rootRouteChildren: RootRouteChildren = {
   DiscordRoute: DiscordRoute,
   EpicRoute: EpicRoute,
   GogRoute: GogRoute,
-  GuiasRoute: GuiasRoute,
+  GuiasRoute: GuiasRouteWithChildren,
   ItchRoute: ItchRoute,
   LoginRoute: LoginRoute,
   PrimeRoute: PrimeRoute,
