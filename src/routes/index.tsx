@@ -87,8 +87,8 @@ function HomePage() {
       </section>
 
       <section id="newsletter" className="border-t border-border/60 bg-card/30">
-        <div className="container mx-auto max-w-2xl px-6 py-16 text-center">
-          <h2 className="font-display text-3xl font-bold">Receba a curadoria diária</h2>
+        <div className="container mx-auto max-w-2xl px-4 py-12 text-center sm:px-6 sm:py-16">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">Receba a curadoria diária</h2>
           <p className="mt-2 text-muted-foreground">
             Todos os dias: jogos grátis novos, sem spam, sem patrocínio.
           </p>
