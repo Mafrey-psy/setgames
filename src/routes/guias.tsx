@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { BookOpen, Download, Settings, Trophy, type LucideIcon } from "lucide-react";
