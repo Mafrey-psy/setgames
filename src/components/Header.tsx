@@ -25,23 +25,23 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
-        <Link to="/" className="group flex items-center gap-2" onClick={close}>
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-primary/15 text-primary transition group-hover:bg-primary/25">
-            <Gamepad2 className="h-5 w-5" />
+      <div className="container mx-auto flex h-14 items-center justify-between gap-2 px-4 sm:h-16 sm:gap-3 sm:px-6">
+        <Link to="/" className="group flex shrink-0 items-center gap-2" onClick={close}>
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-primary/15 text-primary transition group-hover:bg-primary/25 sm:h-9 sm:w-9">
+            <Gamepad2 className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
-          <span className="whitespace-nowrap font-display text-lg font-bold tracking-tight">
+          <span className="whitespace-nowrap font-display text-base font-bold tracking-tight sm:text-lg">
             Set Games
           </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex">
           {nav.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+              className="whitespace-nowrap rounded-md px-2.5 py-1.5 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
               activeProps={{ className: "bg-secondary text-foreground" }}
               activeOptions={{ exact: item.to === "/" }}
             >
@@ -52,20 +52,20 @@ export function Header() {
             trigger={
               <button
                 type="button"
-                className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+                className="whitespace-nowrap rounded-md px-2.5 py-1.5 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
               >
-                Fale conosco
+                Contato
               </button>
             }
           />
         </nav>
 
         {/* Desktop right actions */}
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden shrink-0 items-center gap-2 xl:flex">
           {isAdmin && (
             <Link
               to="/admin"
-              className="flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent transition hover:bg-accent/20"
+              className="flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-2.5 py-1.5 text-xs font-semibold text-accent transition hover:bg-accent/20"
             >
               <Shield className="h-3.5 w-3.5" /> Admin
             </Link>
@@ -73,7 +73,7 @@ export function Header() {
           {user && (
             <button
               onClick={() => signOut()}
-              className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-muted-foreground transition hover:text-foreground"
+              className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition hover:text-foreground"
               title={user.email ?? undefined}
             >
               <LogOut className="h-4 w-4" /> Sair
@@ -85,7 +85,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setMobileOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition hover:bg-secondary lg:hidden"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border text-foreground transition hover:bg-secondary xl:hidden"
           aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={mobileOpen}
         >
