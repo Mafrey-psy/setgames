@@ -19,14 +19,14 @@ function AdminGuides() {
       return data as any[];
     },
   });
-  const [form, setForm] = useState({ title: "", description: "", icon: "BookOpen", read_time: "5 min" });
+  const [form, setForm] = useState({ title: "", description: "", icon: "BookOpen", read_time: "5 min", content: "" });
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     const { error } = await supabase.from("guides").insert(form);
     if (error) return toast.error(error.message);
     toast.success("Guia adicionado");
-    setForm({ title: "", description: "", icon: "BookOpen", read_time: "5 min" });
+    setForm({ title: "", description: "", icon: "BookOpen", read_time: "5 min", content: "" });
     qc.invalidateQueries({ queryKey: ["admin-guides"] });
     qc.invalidateQueries({ queryKey: ["guides"] });
   };
