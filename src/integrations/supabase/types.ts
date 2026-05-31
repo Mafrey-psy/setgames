@@ -157,6 +157,7 @@ export type Database = {
       }
       guides: {
         Row: {
+          content: string
           created_at: string
           description: string
           icon: string
@@ -166,6 +167,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          content?: string
           created_at?: string
           description: string
           icon?: string
@@ -175,6 +177,7 @@ export type Database = {
           title: string
         }
         Update: {
+          content?: string
           created_at?: string
           description?: string
           icon?: string
