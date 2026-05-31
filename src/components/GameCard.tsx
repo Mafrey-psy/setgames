@@ -42,29 +42,29 @@ export function GameCard({ game }: { game: Game }) {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        <div className="absolute left-4 top-4 flex gap-2">
-          <span className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur ${platformColor}`}>
+        <div className="absolute left-3 top-3 flex gap-2 sm:left-4 sm:top-4">
+          <span className={`rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur sm:px-2 sm:text-xs ${platformColor}`}>
             {platformLabel}
           </span>
         </div>
-        <div className="absolute right-4 top-4 flex items-center gap-1 rounded bg-background/70 px-2 py-0.5 text-xs backdrop-blur">
+        <div className="absolute right-3 top-3 flex items-center gap-1 rounded bg-background/70 px-1.5 py-0.5 text-[10px] backdrop-blur sm:right-4 sm:top-4 sm:px-2 sm:text-xs">
           <Star className="h-3 w-3 fill-accent text-accent" />
           <span className="font-semibold">{game.rating.toFixed(1)}</span>
         </div>
-        <h3 className="absolute bottom-3 left-4 right-4 font-display text-lg font-bold leading-tight text-foreground drop-shadow-lg sm:text-xl">
+        <h3 className="absolute bottom-3 left-3 right-3 line-clamp-2 font-display text-base font-bold leading-tight text-foreground drop-shadow-lg sm:left-4 sm:right-4 sm:text-lg md:text-xl">
           {game.title}
         </h3>
       </div>
-      <div className="space-y-3 p-5">
+      <div className="space-y-3 p-4 sm:p-5">
         <p className="line-clamp-3 text-sm text-muted-foreground">{game.description}</p>
         <div className="flex flex-wrap gap-1.5">
-          {game.genre.map((g) => (
+          {game.genre.slice(0, 3).map((g) => (
             <span key={g} className="rounded-md bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
               {g}
             </span>
           ))}
         </div>
-        <div className="flex items-center justify-between border-t border-border/60 pt-3 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-3 text-xs">
           <div className="text-muted-foreground">
             <span className="line-through">{game.originalPrice}</span>{" "}
             <span className="font-bold text-accent">GRÁTIS</span>
