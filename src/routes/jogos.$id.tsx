@@ -123,7 +123,10 @@ function GamePage() {
           {error && (
             <p className="text-sm text-destructive">Não foi possível gerar a síntese agora. Tente novamente em instantes.</p>
           )}
-          {summaryData && (
+          {summaryData && !summaryData.summary && (
+            <p className="text-sm text-muted-foreground">A síntese deste jogo ainda não foi gerada. Volte em breve.</p>
+          )}
+          {summaryData?.summary && (
             <div className="prose-summary space-y-3 text-sm leading-relaxed text-foreground/90">
               {summaryData.summary.split("\n").filter(Boolean).map((line, i) => {
                 const m = line.match(/^\s*\*\*(.+?)\*\*\s*[:—-]?\s*(.*)$/);
