@@ -24,10 +24,11 @@ function PrimePage() {
     <PageShell>
       <PageHeader
         eyebrow="Amazon Prime Gaming"
-        title="Brindes mensais do Prime"
-        description="Jogos pagos liberados todo mês para assinantes Prime. Resgate enquanto estão disponíveis."
+        title="Jogos grátis no Prime Gaming"
+        description="Jogos pagos liberados todo mês para assinantes Amazon Prime. Resgate enquanto estão disponíveis."
       />
       <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <h2 className="mb-6 font-display text-xl font-bold sm:text-2xl">Disponíveis agora</h2>
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (

@@ -24,10 +24,11 @@ function GogPage() {
     <PageShell>
       <PageHeader
         eyebrow="GOG"
-        title="Sem DRM, para sempre"
-        description="Promoções 100% off e brindes na GOG. Baixe o instalador e fique com o jogo, sem clientes obrigatórios."
+        title="Jogos grátis na GOG"
+        description="Promoções 100% off e brindes na GOG. Baixe o instalador e fique com o jogo, sem DRM e sem clientes obrigatórios."
       />
       <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <h2 className="mb-6 font-display text-xl font-bold sm:text-2xl">Disponíveis agora</h2>
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (

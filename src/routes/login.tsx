@@ -8,7 +8,16 @@ import { Gamepad2 } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
-  head: () => ({ meta: [{ title: "Entrar — Set Games" }] }),
+  head: () => ({
+    meta: [
+      { title: "Entrar — Set Games" },
+      { name: "description", content: "Acesse sua conta no Set Games para administrar a curadoria de jogos grátis, guias e conteúdo editorial." },
+      { property: "og:title", content: "Entrar — Set Games" },
+      { property: "og:description", content: "Acesse sua conta no Set Games para administrar a curadoria de jogos grátis, guias e conteúdo editorial." },
+      { property: "og:url", content: "https://setgames.lovable.app/login" },
+    ],
+    links: [{ rel: "canonical", href: "https://setgames.lovable.app/login" }],
+  }),
 });
 
 const schema = z.object({

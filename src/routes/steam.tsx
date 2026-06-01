@@ -24,10 +24,11 @@ function SteamPage() {
     <PageShell>
       <PageHeader
         eyebrow="Steam"
-        title="100% off por tempo limitado"
+        title="Jogos grátis na Steam"
         description="Jogos pagos da Steam liberados gratuitamente em janelas específicas. Sem free-to-play."
       />
       <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <h2 className="mb-6 font-display text-xl font-bold sm:text-2xl">Disponíveis agora</h2>
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (
