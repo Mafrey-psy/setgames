@@ -24,10 +24,11 @@ function DiscordPage() {
     <PageShell>
       <PageHeader
         eyebrow="Discord"
-        title="Brindes do Discord"
+        title="Jogos grátis no Discord"
         description="Jogos pagos liberados via Discord, drops do Nitro e promoções da loja."
       />
       <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <h2 className="mb-6 font-display text-xl font-bold sm:text-2xl">Disponíveis agora</h2>
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (

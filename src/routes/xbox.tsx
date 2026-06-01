@@ -24,10 +24,11 @@ function XboxPage() {
     <PageShell>
       <PageHeader
         eyebrow="Xbox Cloud Gaming"
-        title="Jogue grátis na nuvem"
+        title="Jogos grátis no Xbox Cloud Gaming"
         description="Jogos pagos liberados gratuitamente para Xbox, Game Pass e Cloud Gaming, sem precisar baixar."
       />
       <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <h2 className="mb-6 font-display text-xl font-bold sm:text-2xl">Disponíveis agora</h2>
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (

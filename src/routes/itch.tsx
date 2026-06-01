@@ -24,10 +24,11 @@ function ItchPage() {
     <PageShell>
       <PageHeader
         eyebrow="Itch.io"
-        title="Indies pagos liberados"
-        description="O lado mais criativo dos jogos. Promoções 100% off com curadoria de autor."
+        title="Jogos grátis no Itch.io"
+        description="O lado mais criativo dos jogos. Indies pagos com promoções 100% off e curadoria de autor."
       />
       <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <h2 className="mb-6 font-display text-xl font-bold sm:text-2xl">Disponíveis agora</h2>
         {isLoading ? (
           <p className="text-muted-foreground">Carregando...</p>
         ) : list.length === 0 ? (

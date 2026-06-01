@@ -34,6 +34,21 @@ export const Route = createFileRoute("/guias/$id")({
         { property: "og:url", content: url },
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: title,
+            description,
+            url,
+            mainEntityOfPage: url,
+            publisher: { "@type": "Organization", name: "Set Games" },
+            articleBody: loaderData?.content ?? description,
+          }),
+        },
+      ],
     };
   },
 });
