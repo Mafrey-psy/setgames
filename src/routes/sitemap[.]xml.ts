@@ -48,12 +48,11 @@ export const Route = createFileRoute("/sitemap.xml")({
         try {
           const { data } = await supabaseAdmin
             .from("guides")
-            .select("id, updated_at")
+            .select("id")
             .eq("published", true);
           for (const g of data ?? []) {
             entries.push({
               path: `/guias/${g.id}`,
-              lastmod: g.updated_at ? new Date(g.updated_at).toISOString().slice(0, 10) : undefined,
               changefreq: "monthly",
               priority: "0.6",
             });
