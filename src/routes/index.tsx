@@ -31,7 +31,7 @@ function HomePage() {
   return (
     <PageShell>
       <section className="relative overflow-hidden border-b border-border/60">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
+        <img src={heroImg} alt="" width={1920} height={1080} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
         <div className="container relative mx-auto px-4 py-14 sm:px-6 sm:py-20 md:py-28 lg:py-32">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent sm:text-xs">

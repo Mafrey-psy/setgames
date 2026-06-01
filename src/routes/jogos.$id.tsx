@@ -21,16 +21,16 @@ export const Route = createFileRoute("/jogos/$id")({
   loader: ({ params, context }) =>
     context.queryClient.ensureQueryData(gameQueryOptions(params.id)),
   head: ({ loaderData }) => {
-    const title = loaderData?.title ?? "Jogo";
-    const description = (loaderData?.description ?? "Síntese de reviews dos players.").slice(0, 160);
+    const title = loaderData?.title ?? "Jogo grátis por tempo limitado";
+    const description = (loaderData?.description ?? "Síntese de reviews dos players e detalhes do resgate gratuito.").slice(0, 160);
     const url = `https://setgames.lovable.app/jogos/${loaderData?.id ?? ""}`;
     return {
       meta: [
-        { title: `${title} — Reviews | Set Games` },
+        { title: `${title} — Grátis no ${loaderData?.platform ?? "Set Games"}` },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
-        { property: "og:type", content: "article" },
+        { property: "og:type", content: "product" },
         { property: "og:url", content: url },
         ...(loaderData?.imageUrl ? [
           { property: "og:image", content: loaderData.imageUrl },
@@ -38,6 +38,26 @@ export const Route = createFileRoute("/jogos/$id")({
         ] : []),
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: loaderData ? [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: loaderData.title,
+            description,
+            image: loaderData.imageUrl || undefined,
+            brand: loaderData.developer ? { "@type": "Brand", name: loaderData.developer } : undefined,
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "BRL",
+              availability: "https://schema.org/InStock",
+              url: loaderData.url,
+            },
+          }),
+        },
+      ] : [],
     };
   },
 });
