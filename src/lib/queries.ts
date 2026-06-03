@@ -8,6 +8,7 @@ export interface Guide {
   icon: string;
   readTime: string;
   content: string;
+  createdAt: string;
 }
 
 export interface CulturePost {
@@ -85,6 +86,7 @@ function rowToGuide(r: any): Guide {
     icon: r.icon,
     readTime: r.read_time,
     content: r.content ?? "",
+    createdAt: r.created_at,
   };
 }
 
