@@ -8,6 +8,7 @@ export interface Guide {
   icon: string;
   readTime: string;
   content: string;
+  createdAt: string;
 }
 
 export interface CulturePost {
