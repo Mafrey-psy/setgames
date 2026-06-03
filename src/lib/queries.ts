@@ -86,6 +86,7 @@ function rowToGuide(r: any): Guide {
     icon: r.icon,
     readTime: r.read_time,
     content: r.content ?? "",
+    createdAt: r.created_at,
   };
 }
 
