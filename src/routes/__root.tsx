@@ -82,6 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Curadoria diária de jogos grátis por tempo limitado na Epic Games, Steam e mais." },
       { property: "og:type", content: "website" },
       { name: "google-adsense-account", content: "ca-pub-1825262290152748" },
+      { name: "google-site-verification", content: "gn3e2yXl9EX4_xp-vQlDzm-7hwY3CVKNC0NCyDge9_Q" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Set Games — Jogos grátis e cultura gamer" },
