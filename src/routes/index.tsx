@@ -18,7 +18,10 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Curadoria diária dos melhores jogos grátis por tempo limitado na Epic e Steam." },
       { property: "og:url", content: "https://setgames.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "https://setgames.lovable.app/" }],
+    links: [
+      { rel: "canonical", href: "https://setgames.lovable.app/" },
+      { rel: "preload", as: "image", href: heroImg, fetchpriority: "high" },
+    ],
   }),
 });
 
