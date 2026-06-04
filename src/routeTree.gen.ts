@@ -9,17 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as XboxRouteImport } from './routes/xbox'
 import { Route as SteamRouteImport } from './routes/steam'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as PrimeRouteImport } from './routes/prime'
+import { Route as OutrosRouteImport } from './routes/outros'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as ItchRouteImport } from './routes/itch'
 import { Route as GuiasRouteImport } from './routes/guias'
-import { Route as GogRouteImport } from './routes/gog'
 import { Route as EpicRouteImport } from './routes/epic'
-import { Route as DiscordRouteImport } from './routes/discord'
 import { Route as CulturaRouteImport } from './routes/cultura'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -35,11 +31,6 @@ import { Route as AdminAdminGuidesRouteImport } from './routes/_admin/admin.guid
 import { Route as AdminAdminGamesRouteImport } from './routes/_admin/admin.games'
 import { Route as AdminAdminCultureRouteImport } from './routes/_admin/admin.culture'
 
-const XboxRoute = XboxRouteImport.update({
-  id: '/xbox',
-  path: '/xbox',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SteamRoute = SteamRouteImport.update({
   id: '/steam',
   path: '/steam',
@@ -55,9 +46,9 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrimeRoute = PrimeRouteImport.update({
-  id: '/prime',
-  path: '/prime',
+const OutrosRoute = OutrosRouteImport.update({
+  id: '/outros',
+  path: '/outros',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -65,29 +56,14 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ItchRoute = ItchRouteImport.update({
-  id: '/itch',
-  path: '/itch',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GuiasRoute = GuiasRouteImport.update({
   id: '/guias',
   path: '/guias',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GogRoute = GogRouteImport.update({
-  id: '/gog',
-  path: '/gog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EpicRoute = EpicRouteImport.update({
   id: '/epic',
   path: '/epic',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DiscordRoute = DiscordRouteImport.update({
-  id: '/discord',
-  path: '/discord',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CulturaRoute = CulturaRouteImport.update({
@@ -163,17 +139,13 @@ const AdminAdminCultureRoute = AdminAdminCultureRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cultura': typeof CulturaRouteWithChildren
-  '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
-  '/gog': typeof GogRoute
   '/guias': typeof GuiasRouteWithChildren
-  '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
-  '/prime': typeof PrimeRoute
+  '/outros': typeof OutrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
-  '/xbox': typeof XboxRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
   '/guias/$id': typeof GuiasIdRoute
@@ -189,17 +161,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cultura': typeof CulturaRouteWithChildren
-  '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
-  '/gog': typeof GogRoute
   '/guias': typeof GuiasRouteWithChildren
-  '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
-  '/prime': typeof PrimeRoute
+  '/outros': typeof OutrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
-  '/xbox': typeof XboxRoute
   '/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
   '/guias/$id': typeof GuiasIdRoute
@@ -217,17 +185,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_admin': typeof AdminRouteWithChildren
   '/cultura': typeof CulturaRouteWithChildren
-  '/discord': typeof DiscordRoute
   '/epic': typeof EpicRoute
-  '/gog': typeof GogRoute
   '/guias': typeof GuiasRouteWithChildren
-  '/itch': typeof ItchRoute
   '/login': typeof LoginRoute
-  '/prime': typeof PrimeRoute
+  '/outros': typeof OutrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/steam': typeof SteamRoute
-  '/xbox': typeof XboxRoute
   '/_admin/admin': typeof AdminAdminRouteWithChildren
   '/cultura/$slug': typeof CulturaSlugRoute
   '/guias/$id': typeof GuiasIdRoute
@@ -245,17 +209,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cultura'
-    | '/discord'
     | '/epic'
-    | '/gog'
     | '/guias'
-    | '/itch'
     | '/login'
-    | '/prime'
+    | '/outros'
     | '/sitemap.xml'
     | '/sobre'
     | '/steam'
-    | '/xbox'
     | '/admin'
     | '/cultura/$slug'
     | '/guias/$id'
@@ -271,17 +231,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cultura'
-    | '/discord'
     | '/epic'
-    | '/gog'
     | '/guias'
-    | '/itch'
     | '/login'
-    | '/prime'
+    | '/outros'
     | '/sitemap.xml'
     | '/sobre'
     | '/steam'
-    | '/xbox'
     | '/admin'
     | '/cultura/$slug'
     | '/guias/$id'
@@ -298,17 +254,13 @@ export interface FileRouteTypes {
     | '/'
     | '/_admin'
     | '/cultura'
-    | '/discord'
     | '/epic'
-    | '/gog'
     | '/guias'
-    | '/itch'
     | '/login'
-    | '/prime'
+    | '/outros'
     | '/sitemap.xml'
     | '/sobre'
     | '/steam'
-    | '/xbox'
     | '/_admin/admin'
     | '/cultura/$slug'
     | '/guias/$id'
@@ -326,30 +278,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CulturaRoute: typeof CulturaRouteWithChildren
-  DiscordRoute: typeof DiscordRoute
   EpicRoute: typeof EpicRoute
-  GogRoute: typeof GogRoute
   GuiasRoute: typeof GuiasRouteWithChildren
-  ItchRoute: typeof ItchRoute
   LoginRoute: typeof LoginRoute
-  PrimeRoute: typeof PrimeRoute
+  OutrosRoute: typeof OutrosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   SteamRoute: typeof SteamRoute
-  XboxRoute: typeof XboxRoute
   JogosIdRoute: typeof JogosIdRoute
   ApiPublicSyncGamesRoute: typeof ApiPublicSyncGamesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/xbox': {
-      id: '/xbox'
-      path: '/xbox'
-      fullPath: '/xbox'
-      preLoaderRoute: typeof XboxRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/steam': {
       id: '/steam'
       path: '/steam'
@@ -371,11 +312,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/prime': {
-      id: '/prime'
-      path: '/prime'
-      fullPath: '/prime'
-      preLoaderRoute: typeof PrimeRouteImport
+    '/outros': {
+      id: '/outros'
+      path: '/outros'
+      fullPath: '/outros'
+      preLoaderRoute: typeof OutrosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -385,13 +326,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/itch': {
-      id: '/itch'
-      path: '/itch'
-      fullPath: '/itch'
-      preLoaderRoute: typeof ItchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/guias': {
       id: '/guias'
       path: '/guias'
@@ -399,25 +333,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gog': {
-      id: '/gog'
-      path: '/gog'
-      fullPath: '/gog'
-      preLoaderRoute: typeof GogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/epic': {
       id: '/epic'
       path: '/epic'
       fullPath: '/epic'
       preLoaderRoute: typeof EpicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/discord': {
-      id: '/discord'
-      path: '/discord'
-      fullPath: '/discord'
-      preLoaderRoute: typeof DiscordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cultura': {
@@ -578,17 +498,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CulturaRoute: CulturaRouteWithChildren,
-  DiscordRoute: DiscordRoute,
   EpicRoute: EpicRoute,
-  GogRoute: GogRoute,
   GuiasRoute: GuiasRouteWithChildren,
-  ItchRoute: ItchRoute,
   LoginRoute: LoginRoute,
-  PrimeRoute: PrimeRoute,
+  OutrosRoute: OutrosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   SteamRoute: SteamRoute,
-  XboxRoute: XboxRoute,
   JogosIdRoute: JogosIdRoute,
   ApiPublicSyncGamesRoute: ApiPublicSyncGamesRoute,
 }
