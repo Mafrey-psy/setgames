@@ -47,7 +47,7 @@ export const generateGameReviewsSummary = createServerFn({ method: "POST" })
     }
     return d;
   })
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     const { data: game, error } = await supabaseAdmin
       .from("games")
       .select("id,title,developer,platform,reviews_summary,reviews_summary_updated_at")
@@ -57,9 +57,19 @@ export const generateGameReviewsSummary = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     if (!game) throw new Error("Jogo não encontrado");
 
+    // Only admins may bypass the 30-day cache via `force: true`.
+    let force = false;
+    if (data.force) {
+      const { data: roles } = await supabaseAdmin
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", context.userId);
+      force = roles?.some((r) => r.role === "admin") ?? false;
+    }
+
     const cachedAt = game.reviews_summary_updated_at ? new Date(game.reviews_summary_updated_at).getTime() : 0;
     const fresh = Date.now() - cachedAt < 1000 * 60 * 60 * 24 * 30;
-    if (!data.force && game.reviews_summary && fresh) {
+    if (!force && game.reviews_summary && fresh) {
       return { summary: game.reviews_summary as string, cached: true };
     }
 
