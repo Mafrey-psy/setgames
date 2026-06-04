@@ -60,6 +60,18 @@ export async function fetchGames(platform?: Platform): Promise<Game[]> {
   return (data ?? []).map(rowToGame);
 }
 
+export async function fetchOtherGames(): Promise<Game[]> {
+  const { data, error } = await supabase
+    .from("games")
+    .select("*")
+    .eq("published", true)
+    .gt("free_until", new Date().toISOString())
+    .not("platform", "in", "(epic,steam)")
+    .order("free_until", { ascending: true });
+  if (error) throw error;
+  return (data ?? []).map(rowToGame);
+}
+
 
 export async function fetchGuides(): Promise<Guide[]> {
   const { data, error } = await supabase

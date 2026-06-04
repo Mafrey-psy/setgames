@@ -19,8 +19,13 @@ export function GameCard({ game }: { game: Game }) {
   const navigate = useNavigate();
   const expires = new Date(game.freeUntil);
   const showExpiry = expires.getFullYear() < 2099;
-  const platformColor = PLATFORM_BADGE[game.platform] ?? "bg-secondary text-secondary-foreground border-border";
-  const platformLabel = PLATFORM_LABELS[game.platform as keyof typeof PLATFORM_LABELS] ?? game.platform;
+  const isMainPlatform = game.platform === "epic" || game.platform === "steam";
+  const platformColor = isMainPlatform
+    ? PLATFORM_BADGE[game.platform]
+    : "bg-secondary text-secondary-foreground border-border";
+  const platformLabel = isMainPlatform
+    ? PLATFORM_LABELS[game.platform as keyof typeof PLATFORM_LABELS]
+    : "OUTROS";
 
   const openReviews = () => navigate({ to: "/jogos/$id", params: { id: game.id } });
 
