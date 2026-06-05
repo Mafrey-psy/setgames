@@ -27,7 +27,6 @@ const schema = z.object({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,29 +39,14 @@ function LoginPage() {
       return;
     }
     setLoading(true);
-    if (mode === "signup") {
-      const { error } = await supabase.auth.signUp({
-        email: parsed.data.email,
-        password: parsed.data.password,
-        options: { emailRedirectTo: `${window.location.origin}/` },
-      });
-      if (error) {
-        toast.error(error.message);
-        setLoading(false);
-        return;
-      }
-      toast.success("Conta criada!");
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: parsed.data.email,
-        password: parsed.data.password,
-      });
-      if (error) {
-        toast.error("E-mail ou senha incorretos.");
-        setLoading(false);
-        return;
-      }
-      
+    const { error } = await supabase.auth.signInWithPassword({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
+    if (error) {
+      toast.error("E-mail ou senha incorretos.");
+      setLoading(false);
+      return;
     }
     setLoading(false);
     navigate({ to: "/" });
@@ -75,12 +59,8 @@ function LoginPage() {
           <span className="mb-3 grid h-12 w-12 place-items-center rounded-md bg-primary/15 text-primary">
             <Gamepad2 className="h-6 w-6" />
           </span>
-          <h1 className="font-display text-2xl font-bold">
-            {mode === "login" ? "Entrar" : "Criar conta"}
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {mode === "login" ? "Acesse sua área administrativa." : "O primeiro usuário cadastrado vira admin."}
-          </p>
+          <h1 className="font-display text-2xl font-bold">Entrar</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Acesse sua área administrativa.</p>
         </div>
         <form onSubmit={submit} className="space-y-4 rounded-xl border border-border bg-card p-6">
           <div>
@@ -111,14 +91,7 @@ function LoginPage() {
             disabled={loading}
             className="w-full rounded-md bg-primary py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
           >
-            {loading ? "Aguarde..." : mode === "login" ? "Entrar" : "Criar conta"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode(mode === "login" ? "signup" : "login")}
-            className="w-full text-center text-xs text-muted-foreground hover:text-foreground"
-          >
-            {mode === "login" ? "Não tem conta? Criar uma" : "Já tem conta? Entrar"}
+            {loading ? "Aguarde..." : "Entrar"}
           </button>
         </form>
         <Link to="/" className="mt-6 text-center text-xs text-muted-foreground hover:text-foreground">
