@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus, Pencil, X } from "lucide-react";
 
 export const Route = createFileRoute("/_admin/admin/games")({
   component: AdminGames,
@@ -22,12 +22,14 @@ interface Row {
   url: string;
   accent: string;
   published: boolean;
+  image_url: string | null;
 }
 
-const empty: Omit<Row, "id"> = {
-  title: "", description: "", platform: "epic", genre: [], original_price: "",
+const empty = {
+  title: "", description: "", platform: "epic", genreText: "", original_price: "",
   free_until: new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10),
-  developer: "", rating: 4.5, url: "", accent: "from-fuchsia-600 to-rose-500", published: true,
+  developer: "", rating: 4.5, url: "", accent: "from-fuchsia-600 to-rose-500",
+  published: true, image_url: "",
 };
 
 function AdminGames() {
@@ -40,8 +42,14 @@ function AdminGames() {
       return data as Row[];
     },
   });
-  const [form, setForm] = useState({ ...empty, genreText: "" });
+  const [form, setForm] = useState(empty);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  const invalidate = () => {
+    qc.invalidateQueries({ queryKey: ["admin-games"] });
+    qc.invalidateQueries({ queryKey: ["games"] });
+  };
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,29 +66,45 @@ function AdminGames() {
       url: form.url,
       accent: form.accent,
       published: form.published,
+      image_url: form.image_url || null,
     };
-    const { error } = await supabase.from("games").insert(payload);
+    const { error } = editingId
+      ? await supabase.from("games").update(payload).eq("id", editingId)
+      : await supabase.from("games").insert(payload);
     setBusy(false);
     if (error) return toast.error(error.message);
-    toast.success("Jogo adicionado");
-    setForm({ ...empty, genreText: "" });
-    qc.invalidateQueries({ queryKey: ["admin-games"] });
-    qc.invalidateQueries({ queryKey: ["games"] });
+    toast.success(editingId ? "Jogo atualizado" : "Jogo adicionado");
+    setForm(empty);
+    setEditingId(null);
+    invalidate();
   };
+
+  const startEdit = (r: Row) => {
+    setEditingId(r.id);
+    setForm({
+      title: r.title, description: r.description, platform: r.platform,
+      genreText: (r.genre ?? []).join(", "),
+      original_price: r.original_price,
+      free_until: new Date(r.free_until).toISOString().slice(0, 10),
+      developer: r.developer, rating: Number(r.rating), url: r.url, accent: r.accent,
+      published: r.published, image_url: r.image_url ?? "",
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelEdit = () => { setEditingId(null); setForm(empty); };
 
   const remove = async (id: string) => {
     if (!confirm("Excluir este jogo?")) return;
     const { error } = await supabase.from("games").delete().eq("id", id);
     if (error) return toast.error(error.message);
-    qc.invalidateQueries({ queryKey: ["admin-games"] });
-    qc.invalidateQueries({ queryKey: ["games"] });
+    invalidate();
   };
 
   const togglePublished = async (id: string, value: boolean) => {
     const { error } = await supabase.from("games").update({ published: value }).eq("id", id);
     if (error) return toast.error(error.message);
-    qc.invalidateQueries({ queryKey: ["admin-games"] });
-    qc.invalidateQueries({ queryKey: ["games"] });
+    invalidate();
   };
 
   return (
@@ -91,6 +115,10 @@ function AdminGames() {
       </div>
 
       <form onSubmit={save} className="grid gap-4 rounded-xl border border-border bg-card p-6 md:grid-cols-2">
+        <div className="md:col-span-2 flex items-center justify-between">
+          <p className="text-sm font-semibold">{editingId ? "Editando jogo" : "Novo jogo"}</p>
+          {editingId && <button type="button" onClick={cancelEdit} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"><X className="h-3 w-3" /> Cancelar</button>}
+        </div>
         <Field label="Título"><input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inp} /></Field>
         <Field label="Desenvolvedor"><input required value={form.developer} onChange={(e) => setForm({ ...form, developer: e.target.value })} className={inp} /></Field>
         <Field label="Descrição" full><textarea required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inp} rows={2} /></Field>
@@ -98,6 +126,7 @@ function AdminGames() {
           <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className={inp}>
             <option value="epic">Epic</option><option value="steam">Steam</option>
             <option value="gog">GOG</option><option value="playstation">PlayStation</option><option value="xbox">Xbox</option>
+            <option value="amazon">Amazon</option><option value="itch">Itch.io</option><option value="discord">Discord</option>
           </select>
         </Field>
         <Field label="Gêneros (separados por vírgula)"><input value={form.genreText} onChange={(e) => setForm({ ...form, genreText: e.target.value })} className={inp} placeholder="Ação, RPG" /></Field>
@@ -105,10 +134,12 @@ function AdminGames() {
         <Field label="Grátis até"><input type="date" required value={form.free_until} onChange={(e) => setForm({ ...form, free_until: e.target.value })} className={inp} /></Field>
         <Field label="Nota (0-5)"><input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })} className={inp} /></Field>
         <Field label="URL"><input type="url" required value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} className={inp} /></Field>
+        <Field label="URL da imagem" full><input type="url" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className={inp} placeholder="https://..." /></Field>
         <Field label="Gradiente Tailwind"><input value={form.accent} onChange={(e) => setForm({ ...form, accent: e.target.value })} className={inp} /></Field>
+        <label className="flex items-end gap-2 pb-2 text-sm"><input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} /> Publicado</label>
         <div className="md:col-span-2">
           <button disabled={busy} className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50">
-            <Plus className="h-4 w-4" /> {busy ? "Salvando..." : "Adicionar jogo"}
+            <Plus className="h-4 w-4" /> {busy ? "Salvando..." : editingId ? "Salvar alterações" : "Adicionar jogo"}
           </button>
         </div>
       </form>
@@ -125,7 +156,12 @@ function AdminGames() {
                 <td className="p-3 uppercase text-xs text-muted-foreground">{r.platform}</td>
                 <td className="p-3 text-muted-foreground">{new Date(r.free_until).toLocaleDateString("pt-BR")}</td>
                 <td className="p-3"><input type="checkbox" checked={r.published} onChange={(e) => togglePublished(r.id, e.target.checked)} /></td>
-                <td className="p-3 text-right"><button onClick={() => remove(r.id)} className="text-muted-foreground hover:text-destructive"><Trash2 className="h-4 w-4" /></button></td>
+                <td className="p-3 text-right">
+                  <div className="flex justify-end gap-2">
+                    <button onClick={() => startEdit(r)} className="text-muted-foreground hover:text-primary"><Pencil className="h-4 w-4" /></button>
+                    <button onClick={() => remove(r.id)} className="text-muted-foreground hover:text-destructive"><Trash2 className="h-4 w-4" /></button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
