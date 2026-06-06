@@ -2,13 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { BookOpen, Download, Settings, Trophy, type LucideIcon } from "lucide-react";
-import { fetchGuides } from "@/lib/queries";
-
-const faq = [
-  { q: "Os jogos grátis são realmente meus?", a: "Sim. Ao resgatar dentro do prazo, o jogo fica permanentemente na sua biblioteca." },
-  { q: "Por que não listam free-to-play?", a: "Free-to-play está sempre grátis e não é notícia. Aqui só entram jogos pagos liberados por tempo limitado." },
-  { q: "Posso jogar offline?", a: "Depende do launcher — Steam permite modo offline; Epic exige login inicial." },
-];
+import { fetchGuides, fetchFaqs } from "@/lib/queries";
 
 export const Route = createFileRoute("/guias")({
   component: GuiasPage,
@@ -21,20 +15,6 @@ export const Route = createFileRoute("/guias")({
       { property: "og:url", content: "https://setgames.lovable.app/guias" },
     ],
     links: [{ rel: "canonical", href: "https://setgames.lovable.app/guias" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faq.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: { "@type": "Answer", text: f.a },
-          })),
-        }),
-      },
-    ],
   }),
 });
 
@@ -42,6 +22,7 @@ const icons: Record<string, LucideIcon> = { Download, Settings, Trophy, BookOpen
 
 function GuiasPage() {
   const { data: guides = [] } = useQuery({ queryKey: ["guides"], queryFn: fetchGuides });
+  const { data: faqs = [] } = useQuery({ queryKey: ["faqs"], queryFn: fetchFaqs });
 
   return (
     <PageShell>
@@ -74,19 +55,21 @@ function GuiasPage() {
           })}
         </div>
 
-        <div className="mt-16">
-          <h2 className="mb-6 font-display text-2xl font-bold">Dúvidas frequentes</h2>
-          <div className="divide-y divide-border rounded-xl border border-border bg-card">
-            {faq.map((f) => (
-              <details key={f.q} className="group p-5">
-                <summary className="cursor-pointer list-none font-semibold marker:hidden">
-                  <span className="text-accent">+</span> {f.q}
-                </summary>
-                <p className="mt-3 text-sm text-muted-foreground">{f.a}</p>
-              </details>
-            ))}
+        {faqs.length > 0 && (
+          <div className="mt-16">
+            <h2 className="mb-6 font-display text-2xl font-bold">Dúvidas frequentes</h2>
+            <div className="divide-y divide-border rounded-xl border border-border bg-card">
+              {faqs.map((f) => (
+                <details key={f.id} className="group p-5">
+                  <summary className="cursor-pointer list-none font-semibold marker:hidden">
+                    <span className="text-accent">+</span> {f.question}
+                  </summary>
+                  <p className="mt-3 text-sm text-muted-foreground">{f.answer}</p>
+                </details>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
     </PageShell>
   );

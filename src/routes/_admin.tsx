@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, Link, redirect, useNavigate } from "@tanstack/
 import { useAuth } from "@/lib/auth";
 import { PageShell } from "@/components/PageShell";
 import { useEffect } from "react";
-import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail, RefreshCw, MessageCircle } from "lucide-react";
+import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail, RefreshCw, MessageCircle, HelpCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { checkIsAdmin } from "@/lib/admin-guard.functions";
 
@@ -32,6 +32,7 @@ const items = [
   { to: "/admin/games", label: "Jogos", icon: Gamepad2, exact: false },
   { to: "/admin/guides", label: "Guias", icon: BookOpen, exact: false },
   { to: "/admin/culture", label: "Cultura", icon: Newspaper, exact: false },
+  { to: "/admin/faq", label: "Dúvidas frequentes", icon: HelpCircle, exact: false },
   { to: "/admin/subscribers", label: "Newsletter", icon: Mail, exact: false },
   { to: "/admin/tickets", label: "Fale conosco", icon: MessageCircle, exact: false },
 ] as const;
