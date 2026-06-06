@@ -134,3 +134,25 @@ function rowToCulture(r: any): CulturePost {
     publishedAt: r.published_at,
   };
 }
+
+export interface Faq {
+  id: string;
+  question: string;
+  answer: string;
+  sortOrder: number;
+}
+
+export async function fetchFaqs(): Promise<Faq[]> {
+  const { data, error } = await supabase
+    .from("faqs")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+  if (error) throw error;
+  return (data ?? []).map((r: any) => ({
+    id: r.id,
+    question: r.question,
+    answer: r.answer,
+    sortOrder: r.sort_order,
+  }));
+}
