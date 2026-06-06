@@ -32,6 +32,7 @@ const items = [
   { to: "/admin/games", label: "Jogos", icon: Gamepad2, exact: false },
   { to: "/admin/guides", label: "Guias", icon: BookOpen, exact: false },
   { to: "/admin/culture", label: "Cultura", icon: Newspaper, exact: false },
+  { to: "/admin/faq", label: "Dúvidas frequentes", icon: HelpCircle, exact: false },
   { to: "/admin/subscribers", label: "Newsletter", icon: Mail, exact: false },
   { to: "/admin/tickets", label: "Fale conosco", icon: MessageCircle, exact: false },
 ] as const;
