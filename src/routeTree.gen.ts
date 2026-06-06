@@ -29,6 +29,7 @@ import { Route as AdminAdminSyncRouteImport } from './routes/_admin/admin.sync'
 import { Route as AdminAdminSubscribersRouteImport } from './routes/_admin/admin.subscribers'
 import { Route as AdminAdminGuidesRouteImport } from './routes/_admin/admin.guides'
 import { Route as AdminAdminGamesRouteImport } from './routes/_admin/admin.games'
+import { Route as AdminAdminFaqRouteImport } from './routes/_admin/admin.faq'
 import { Route as AdminAdminCultureRouteImport } from './routes/_admin/admin.culture'
 
 const SteamRoute = SteamRouteImport.update({
@@ -130,6 +131,11 @@ const AdminAdminGamesRoute = AdminAdminGamesRouteImport.update({
   path: '/games',
   getParentRoute: () => AdminAdminRoute,
 } as any)
+const AdminAdminFaqRoute = AdminAdminFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
 const AdminAdminCultureRoute = AdminAdminCultureRouteImport.update({
   id: '/culture',
   path: '/culture',
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/guias/$id': typeof GuiasIdRoute
   '/jogos/$id': typeof JogosIdRoute
   '/admin/culture': typeof AdminAdminCultureRoute
+  '/admin/faq': typeof AdminAdminFaqRoute
   '/admin/games': typeof AdminAdminGamesRoute
   '/admin/guides': typeof AdminAdminGuidesRoute
   '/admin/subscribers': typeof AdminAdminSubscribersRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByTo {
   '/guias/$id': typeof GuiasIdRoute
   '/jogos/$id': typeof JogosIdRoute
   '/admin/culture': typeof AdminAdminCultureRoute
+  '/admin/faq': typeof AdminAdminFaqRoute
   '/admin/games': typeof AdminAdminGamesRoute
   '/admin/guides': typeof AdminAdminGuidesRoute
   '/admin/subscribers': typeof AdminAdminSubscribersRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/guias/$id': typeof GuiasIdRoute
   '/jogos/$id': typeof JogosIdRoute
   '/_admin/admin/culture': typeof AdminAdminCultureRoute
+  '/_admin/admin/faq': typeof AdminAdminFaqRoute
   '/_admin/admin/games': typeof AdminAdminGamesRoute
   '/_admin/admin/guides': typeof AdminAdminGuidesRoute
   '/_admin/admin/subscribers': typeof AdminAdminSubscribersRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/guias/$id'
     | '/jogos/$id'
     | '/admin/culture'
+    | '/admin/faq'
     | '/admin/games'
     | '/admin/guides'
     | '/admin/subscribers'
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/guias/$id'
     | '/jogos/$id'
     | '/admin/culture'
+    | '/admin/faq'
     | '/admin/games'
     | '/admin/guides'
     | '/admin/subscribers'
@@ -266,6 +277,7 @@ export interface FileRouteTypes {
     | '/guias/$id'
     | '/jogos/$id'
     | '/_admin/admin/culture'
+    | '/_admin/admin/faq'
     | '/_admin/admin/games'
     | '/_admin/admin/guides'
     | '/_admin/admin/subscribers'
@@ -431,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminGamesRouteImport
       parentRoute: typeof AdminAdminRoute
     }
+    '/_admin/admin/faq': {
+      id: '/_admin/admin/faq'
+      path: '/faq'
+      fullPath: '/admin/faq'
+      preLoaderRoute: typeof AdminAdminFaqRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
     '/_admin/admin/culture': {
       id: '/_admin/admin/culture'
       path: '/culture'
@@ -443,6 +462,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminAdminRouteChildren {
   AdminAdminCultureRoute: typeof AdminAdminCultureRoute
+  AdminAdminFaqRoute: typeof AdminAdminFaqRoute
   AdminAdminGamesRoute: typeof AdminAdminGamesRoute
   AdminAdminGuidesRoute: typeof AdminAdminGuidesRoute
   AdminAdminSubscribersRoute: typeof AdminAdminSubscribersRoute
@@ -452,6 +472,7 @@ interface AdminAdminRouteChildren {
 
 const AdminAdminRouteChildren: AdminAdminRouteChildren = {
   AdminAdminCultureRoute: AdminAdminCultureRoute,
+  AdminAdminFaqRoute: AdminAdminFaqRoute,
   AdminAdminGamesRoute: AdminAdminGamesRoute,
   AdminAdminGuidesRoute: AdminAdminGuidesRoute,
   AdminAdminSubscribersRoute: AdminAdminSubscribersRoute,

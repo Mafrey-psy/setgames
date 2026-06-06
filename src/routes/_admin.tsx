@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, Link, redirect, useNavigate } from "@tanstack/
 import { useAuth } from "@/lib/auth";
 import { PageShell } from "@/components/PageShell";
 import { useEffect } from "react";
-import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail, RefreshCw, MessageCircle } from "lucide-react";
+import { LayoutDashboard, Gamepad2, BookOpen, Newspaper, Mail, RefreshCw, MessageCircle, HelpCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { checkIsAdmin } from "@/lib/admin-guard.functions";
 
