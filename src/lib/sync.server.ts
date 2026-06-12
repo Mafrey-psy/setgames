@@ -279,16 +279,24 @@ export async function runSync(trigger: string): Promise<{
   // Prioridade de fonte: epic > steam > gp (oficiais antes de agregadores).
   const sourcePriority = (id: string) =>
     id.startsWith("epic:") ? 0 : id.startsWith("steam:") ? 1 : 2;
-  const normalizeTitle = (t: string) =>
-    t.toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .replace(/[™®©]/g, "")
-      .replace(/[^a-z0-9]+/g, " ")
-      .trim();
+  // Remove ruído comum de feeds de giveaway: conteúdo entre parênteses/colchetes,
+  // sufixos "Giveaway", "Free", "Key", "Steam/Epic/GOG Key", "DRM-Free", etc.
+  const NOISE_PATTERNS: RegExp[] = [
+    /\([^)]*\)/g, /\[[^\]]*\]/g,
+    /\b(steam|epic|epic games|gog|amazon|prime gaming|itch\.io|itch|xbox|discord|playstation|ps[45])\b/gi,
+    /\b(giveaway|free|gratis|grátis|key|keys|code|codes|drm[\s-]?free|bundle|edition|complete edition|deluxe|standard|definitive|goty)\b/gi,
+  ];
+  const normalizeTitle = (t: string) => {
+    let s = t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[™®©]/g, "");
+    for (const re of NOISE_PATTERNS) s = s.replace(re, " ");
+    return s.replace(/[^a-z0-9]+/g, " ").trim();
+  };
 
   const byKey = new Map<string, NormalizedGame>();
   for (const g of games) {
-    const key = `${g.platform}|${normalizeTitle(g.title)}`;
+    const norm = normalizeTitle(g.title);
+    if (!norm) continue;
+    const key = `${g.platform}|${norm}`;
     const existing = byKey.get(key);
     if (!existing || sourcePriority(g.source_id) < sourcePriority(existing.source_id)) {
       byKey.set(key, g);
