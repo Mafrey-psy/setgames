@@ -176,6 +176,14 @@ async function fetchGamerPower(): Promise<NormalizedGame[]> {
 
     const url = String(it.open_giveaway_url || it.gamerpower_url || "");
     if (!url) continue;
+    // Hardening: only allow http(s) URLs. Prevents javascript:/data: payloads
+    // from a compromised upstream feed being rendered into <a href>.
+    try {
+      const proto = new URL(url).protocol;
+      if (proto !== "https:" && proto !== "http:") continue;
+    } catch {
+      continue;
+    }
 
     const endDate = it.end_date && it.end_date !== "N/A"
       ? new Date(it.end_date).toISOString()
